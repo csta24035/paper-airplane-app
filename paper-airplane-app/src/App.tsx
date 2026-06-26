@@ -48,6 +48,9 @@ function App() {
   const [editingCreatedAt, setEditingCreatedAt] =
     useState<number | null>(null);
 
+  const [completedImages, setCompletedImages] =
+    useState<File[]>([]);
+
   useEffect(() => {
   initDb();
   loadAirplanes();
@@ -118,6 +121,41 @@ async function handleDelete(id: string) {
     console.error(error);
     setError("削除に失敗しました");
   }
+}
+
+function handleCompletedImageChange(
+  event: React.ChangeEvent<HTMLInputElement>
+) {
+  const files = event.target.files;
+
+  if (!files) {
+    return;
+  }
+
+  const fileArray = Array.from(files);
+
+  if (fileArray.length > 3) {
+    setError("完成画像は3枚までです");
+    return;
+  }
+
+  for (const file of fileArray) {
+    if (
+      file.type !== "image/jpeg" &&
+      file.type !== "image/png"
+    ) {
+      setError("JPGまたはPNGのみ登録できます");
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      setError("画像は1枚10MB以下です");
+      return;
+    }
+  }
+
+  setCompletedImages(fileArray);
+  setError("");
 }
 
   const filteredAirplanes =
@@ -355,6 +393,30 @@ if (editingId) {
           }
         />
       </div>
+
+<br />
+
+<div>
+  <label>
+    完成画像（最大3枚）
+  </label>
+
+  <br />
+
+  <input
+    type="file"
+    accept=".jpg,.jpeg,.png"
+    multiple
+    onChange={handleCompletedImageChange}
+  />
+
+  <p>
+  選択中：
+  {completedImages.length}
+  /3枚
+</p>
+
+</div>
 
       <br />
 
