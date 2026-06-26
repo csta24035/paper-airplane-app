@@ -62,3 +62,8 @@ export async function updateAirplane(
 
   await db.put("airplanes", airplane);
 }
+export async function deleteAirplane(id: string) {
+  const db = await dbPromise;
+
+  await db.delete("airplanes", id);
+}

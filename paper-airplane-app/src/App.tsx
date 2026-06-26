@@ -3,6 +3,7 @@ import {
   initDb,
   saveAirplane,
   updateAirplane,
+  deleteAirplane,
   getAirplaneCount,
   getAllAirplanes,
 } from "./db/indexedDb";
@@ -83,6 +84,40 @@ function handleEdit(airplane: any) {
   setEditingCreatedAt(
     airplane.createdAt
   );
+}
+
+async function handleDelete(id: string) {
+  const result = window.confirm(
+    "この紙飛行機を削除しますか？"
+  );
+
+  if (!result) {
+    return;
+  }
+
+  try {
+    await deleteAirplane(id);
+
+    // 編集中のデータを削除した場合
+    if (editingId === id) {
+      setEditingId(null);
+      setEditingCreatedAt(null);
+
+      setName("");
+      setDistance("");
+      setFoldCount("");
+      setCreatedDate("");
+      setMemo("");
+    }
+
+    await loadAirplanes();
+
+    setSuccess("削除しました");
+    setError("");
+  } catch (error) {
+    console.error(error);
+    setError("削除に失敗しました");
+  }
 }
 
   const filteredAirplanes =
@@ -571,6 +606,16 @@ if (editingId) {
   }
 >
   編集
+</button>
+
+{" "}
+
+<button
+  onClick={() =>
+    handleDelete(airplane.id)
+  }
+>
+  削除
 </button>
         </li>
 
