@@ -55,3 +55,10 @@ export async function getAllAirplanes() {
     "airplanes"
   );
 }
+export async function updateAirplane(
+  airplane: AirplaneRecord
+) {
+  const db = await dbPromise;
+
+  await db.put("airplanes", airplane);
+}

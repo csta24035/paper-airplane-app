@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
   initDb,
   saveAirplane,
+  updateAirplane,
   getAirplaneCount,
   getAllAirplanes,
 } from "./db/indexedDb";
@@ -40,6 +41,12 @@ function App() {
   const [sortOrder, setSortOrder] =
     useState("desc");
 
+  const [editingId, setEditingId] =
+    useState<string | null>(null);
+
+  const [editingCreatedAt, setEditingCreatedAt] =
+    useState<number | null>(null);
+
   useEffect(() => {
   initDb();
   loadAirplanes();
@@ -50,6 +57,32 @@ function App() {
     await getAllAirplanes();
 
   setAirplanes(data);
+}
+
+function handleEdit(airplane: any) {
+  setEditingId(airplane.id);
+
+  setName(airplane.name);
+
+  setDistance(
+    airplane.distance?.toString() ?? ""
+  );
+
+  setFoldCount(
+    airplane.foldCount?.toString() ?? ""
+  );
+
+  setCreatedDate(
+    airplane.createdDate ?? ""
+  );
+
+  setMemo(
+    airplane.memo ?? ""
+  );
+
+  setEditingCreatedAt(
+    airplane.createdAt
+  );
 }
 
   const filteredAirplanes =
@@ -194,8 +227,10 @@ if (foldCount !== "") {
     }
 
     try {
-      await saveAirplane({
-  id: crypto.randomUUID(),
+      const airplane = {
+  id:
+    editingId ??
+    crypto.randomUUID(),
 
   name,
 
@@ -218,8 +253,16 @@ if (foldCount !== "") {
 
   instructions: [],
 
-  createdAt: Date.now(),
-});
+  createdAt:
+  editingCreatedAt ??
+  Date.now(),
+};
+
+if (editingId) {
+  await updateAirplane(airplane);
+} else {
+  await saveAirplane(airplane);
+}
 
       setSuccess(
         "保存しました"
@@ -232,6 +275,11 @@ if (foldCount !== "") {
       setFoldCount("");
       setCreatedDate("");
       setMemo("");
+
+      setEditingId(null);
+      setEditingCreatedAt(
+        null
+      );
 
     } catch (error) {
       console.error(
@@ -362,13 +410,11 @@ if (foldCount !== "") {
 
       <br />
 
-      <button
-        onClick={
-          handleSave
-        }
-      >
-        保存
-      </button>
+      <button onClick={handleSave}>
+  {editingId
+    ? "更新"
+    : "保存"}
+</button>
 
       {error && (
         <p
@@ -492,13 +538,13 @@ if (foldCount !== "") {
 ) : (
   <ul>
     {filteredAirplanes.map(
-      (filteredAirplanes) => (
-        <li
-          key={filteredAirplanes.id}
-        >
+  (airplane) => (
+    <li
+      key={airplane.id}
+    >
           <strong>
             {
-              filteredAirplanes.name
+              airplane.name
             }
           </strong>
 
@@ -506,7 +552,7 @@ if (foldCount !== "") {
 
           備考:
           {" "}
-          {filteredAirplanes.memo ||
+          {airplane.memo ||
             "-"}
 
           <br />
@@ -514,9 +560,21 @@ if (foldCount !== "") {
           登録日時:
           {" "}
           {new Date(
-            filteredAirplanes.createdAt
+            airplane.createdAt
           ).toLocaleString()}
+
+          <br />
+
+<button
+  onClick={() =>
+    handleEdit(airplane)
+  }
+>
+  編集
+</button>
         </li>
+
+        
       )
     )}
   </ul>
