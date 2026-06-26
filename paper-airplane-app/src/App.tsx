@@ -7,6 +7,7 @@ import {
   getAirplaneCount,
   getAllAirplanes,
 } from "./db/indexedDb";
+import { resizeImage } from "./utils/image";
 
 function App() {
   const [name, setName] =
@@ -123,7 +124,7 @@ async function handleDelete(id: string) {
   }
 }
 
-function handleCompletedImageChange(
+async function handleCompletedImageChange(
   event: React.ChangeEvent<HTMLInputElement>
 ) {
   const files = event.target.files;
@@ -154,7 +155,16 @@ function handleCompletedImageChange(
     }
   }
 
-  setCompletedImages(fileArray);
+const resizedFiles: File[] = [];
+
+for (const file of fileArray) {
+  const resized =
+    await resizeImage(file);
+
+  resizedFiles.push(resized);
+}
+
+setCompletedImages(resizedFiles);
   setError("");
 }
 
