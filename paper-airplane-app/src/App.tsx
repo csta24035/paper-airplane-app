@@ -9,6 +9,10 @@ import {
 } from "./db/indexedDb";
 import { resizeImage } from "./utils/image";
 import { fileToBase64 } from "./utils/file";
+import ImageUploader from "./components/ImageUploader";
+import SearchSort from "./components/SearchSort";
+import AirplaneList from "./components/AirplaneList";
+import AirplaneForm from "./components/AirplaneForm";
 
 function App() {
   const [name, setName] =
@@ -395,343 +399,43 @@ if (editingId) {
         紙飛行機記録アプリ
       </h1>
 
-      <div>
-        <label>
-          名前（必須）
-        </label>
-
-        <br />
-
-        <input
-          type="text"
-          value={name}
-          maxLength={100}
-          onChange={(e) =>
-            setName(
-              e.target.value
-            )
-          }
-        />
-      </div>
-
-<br />
-
-<div>
-  <label>
-    完成画像（最大3枚）
-  </label>
-
-  <br />
-
-  <input
-    type="file"
-    accept=".jpg,.jpeg,.png"
-    multiple
-    onChange={handleCompletedImageChange}
-  />
-
-  <p>
-  選択中：
-  {completedImages.length}
-  /3枚
-</p>
-
-</div>
-
-      <br />
-
-<div>
-  <label>
-    飛距離(m)
-  </label>
-
-  <br />
-
-  <input
-    type="number"
-    step="0.1"
-    min="0.1"
-    max="9999.9"
-    value={distance}
-    onChange={(e) =>
-      setDistance(
-        e.target.value
-      )
-    }
-  />
-</div>
-
-<br />
-
-<div>
-  <label>
-    折る回数
-  </label>
-
-  <br />
-
-  <input
-    type="number"
-    min="0"
-    max="999"
-    value={foldCount}
-    onChange={(e) =>
-      setFoldCount(
-        e.target.value
-      )
-    }
-  />
-</div>
-
-<br />
-
-<div>
-  <label>
-    作成日
-  </label>
-
-  <br />
-
-  <input
-    type="date"
-    value={createdDate}
-    onChange={(e) =>
-      setCreatedDate(
-        e.target.value
-      )
-    }
-  />
-</div>
-
-      <br />
-
-      <div>
-        <label>
-          備考メモ
-        </label>
-
-        <br />
-
-        <textarea
-          value={memo}
-          maxLength={256}
-          rows={5}
-          cols={40}
-          onChange={(e) =>
-            setMemo(
-              e.target.value
-            )
-          }
-        />
-      </div>
-
-      <br />
-
-      <button onClick={handleSave}>
-  {editingId
-    ? "更新"
-    : "保存"}
-</button>
-
-      {error && (
-        <p
-          style={{
-            color: "red",
-          }}
-        >
-          {error}
-        </p>
-      )}
-
-      {success && (
-        <p
-          style={{
-            color: "green",
-          }}
-        >
-          {success}
-        </p>
-      )}
-      <hr />
-
-      <br />
-
-<hr />
-
-<h2>
-  検索・ソート
-</h2>
-
-<div>
-  <label>
-    名前検索
-  </label>
-
-  <br />
-
-  <input
-    type="text"
-    value={searchKeyword}
-    onChange={(e) =>
-      setSearchKeyword(
-        e.target.value
-      )
-    }
-  />
-</div>
-
-<br />
-
-<div>
-  <label>
-    ソート項目
-  </label>
-
-  <br />
-
-  <select
-    value={sortField}
-    onChange={(e) =>
-      setSortField(
-        e.target.value
-      )
-    }
-  >
-    <option value="name">
-      名前
-    </option>
-
-    <option value="distance">
-      飛距離
-    </option>
-
-    <option value="foldCount">
-      折る回数
-    </option>
-
-    <option value="createdDate">
-      作成日
-    </option>
-  </select>
-</div>
-
-<br />
-
-<div>
-  <label>
-    並び順
-  </label>
-
-  <br />
-
-  <select
-    value={sortOrder}
-    onChange={(e) =>
-      setSortOrder(
-        e.target.value
-      )
-    }
-  >
-    <option value="asc">
-      昇順
-    </option>
-
-    <option value="desc">
-      降順
-    </option>
-  </select>
-</div>
-
-<hr />
-
-<h2>
-  登録済み紙飛行機
-</h2>
-
-{filteredAirplanes.length === 0 ? (
-  <p>
-  該当する紙飛行機はありません
-</p>
-) : (
-  <ul>
-    {filteredAirplanes.map(
-  (airplane) => (
-    <li
-      key={airplane.id}
-    >
-          <strong>
-            {
-              airplane.name
-            }
-          </strong>
-
-          <br />
-
-{airplane.completedImages?.length >
-0 ? (
-  <img
-    src={
-      airplane.completedImages[0]
-    }
-    alt={airplane.name}
-    width={150}
-  />
-) : (
-  <div
-    style={{
-      width: 150,
-      height: 100,
-      border: "1px solid gray",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    }}
-  >
-    No Image
-  </div>
-)}
-
-          <br />
-
-          備考:
-          {" "}
-          {airplane.memo ||
-            "-"}
-
-          <br />
-
-          登録日時:
-          {" "}
-          {new Date(
-            airplane.createdAt
-          ).toLocaleString()}
-
-          <br />
-
-<button
-  onClick={() =>
-    handleEdit(airplane)
+<AirplaneForm
+  name={name}
+  setName={setName}
+  distance={distance}
+  setDistance={setDistance}
+  foldCount={foldCount}
+  setFoldCount={setFoldCount}
+  createdDate={createdDate}
+  setCreatedDate={setCreatedDate}
+  memo={memo}
+  setMemo={setMemo}
+  completedImages={completedImages}
+  handleCompletedImageChange={
+    handleCompletedImageChange
   }
->
-  編集
-</button>
+  handleSave={handleSave}
+  editingId={editingId}
+  error={error}
+  success={success}
+/>
 
-{" "}
+      <br />
 
-<button
-  onClick={() =>
-    handleDelete(airplane.id)
-  }
->
-  削除
-</button>
-        </li>
+<SearchSort
+  searchKeyword={searchKeyword}
+  setSearchKeyword={setSearchKeyword}
+  sortField={sortField}
+  setSortField={setSortField}
+  sortOrder={sortOrder}
+  setSortOrder={setSortOrder}
+/>
 
-        
-      )
-    )}
-  </ul>
-)}
+<AirplaneList
+  airplanes={filteredAirplanes}
+  onEdit={handleEdit}
+  onDelete={handleDelete}
+/>
     </div>
   );
 }
