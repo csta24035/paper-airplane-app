@@ -8,6 +8,7 @@ import {
   getAllAirplanes,
 } from "./db/indexedDb";
 import { resizeImage } from "./utils/image";
+import { fileToBase64 } from "./utils/file";
 
 function App() {
   const [name, setName] =
@@ -310,6 +311,14 @@ if (foldCount !== "") {
     }
 
     try {
+      const imageStrings: string[] = [];
+
+for (const image of completedImages) {
+  const base64 =
+    await fileToBase64(image);
+
+  imageStrings.push(base64);
+}
       const airplane = {
   id:
     editingId ??
@@ -332,7 +341,7 @@ if (foldCount !== "") {
 
   memo,
 
-  completedImageIds: [],
+  completedImages: imageStrings,
 
   instructions: [],
 
@@ -358,6 +367,7 @@ if (editingId) {
       setFoldCount("");
       setCreatedDate("");
       setMemo("");
+      setCompletedImages([]);
 
       setEditingId(null);
       setEditingCreatedAt(
@@ -654,6 +664,32 @@ if (editingId) {
               airplane.name
             }
           </strong>
+
+          <br />
+
+{airplane.completedImages?.length >
+0 ? (
+  <img
+    src={
+      airplane.completedImages[0]
+    }
+    alt={airplane.name}
+    width={150}
+  />
+) : (
+  <div
+    style={{
+      width: 150,
+      height: 100,
+      border: "1px solid gray",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    }}
+  >
+    No Image
+  </div>
+)}
 
           <br />
 

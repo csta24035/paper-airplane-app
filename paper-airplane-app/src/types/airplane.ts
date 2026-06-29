@@ -9,7 +9,7 @@ export interface AirplaneRecord {
 
   name: string;
 
-  completedImageIds: string[];
+  completedImages: string[];
 
   distance?: number;
 
