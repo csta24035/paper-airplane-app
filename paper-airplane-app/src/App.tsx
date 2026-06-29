@@ -9,10 +9,17 @@ import {
 } from "./db/indexedDb";
 import { resizeImage } from "./utils/image";
 import { fileToBase64 } from "./utils/file";
-import ImageUploader from "./components/ImageUploader";
 import SearchSort from "./components/SearchSort";
 import AirplaneList from "./components/AirplaneList";
 import AirplaneForm from "./components/AirplaneForm";
+import {
+  HashRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
+
+import ListPage from "./pages/ListPage";
+import DetailPage from "./pages/DetailPage";
 
 function App() {
   const [name, setName] =
@@ -390,14 +397,12 @@ if (editingId) {
   }
 
   return (
-    <div
-      style={{
-        padding: "20px",
-      }}
-    >
-      <h1>
-        紙飛行機記録アプリ
-      </h1>
+    <HashRouter>
+    <Routes>
+<Route
+path="/"
+element={
+<ListPage>
 
 <AirplaneForm
   name={name}
@@ -436,7 +441,19 @@ if (editingId) {
   onEdit={handleEdit}
   onDelete={handleDelete}
 />
-    </div>
+
+</ListPage>
+}
+/>
+
+<Route
+path="/detail/:id"
+element={<DetailPage/>}
+/>
+
+</Routes>
+
+    </HashRouter>
   );
 }
 

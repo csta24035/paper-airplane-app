@@ -67,3 +67,13 @@ export async function deleteAirplane(id: string) {
 
   await db.delete("airplanes", id);
 }
+export async function getAirplaneById(
+  id: string
+) {
+  const db = await dbPromise;
+
+  return await db.get(
+    "airplanes",
+    id
+  );
+}

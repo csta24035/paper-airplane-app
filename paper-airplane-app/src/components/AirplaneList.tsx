@@ -1,3 +1,7 @@
+//AirplaneList.tsx
+import {
+Link
+} from "react-router-dom";
 type Props = {
   airplanes: any[];
 
@@ -30,9 +34,15 @@ function AirplaneList({
       <ul>
         {airplanes.map((airplane) => (
           <li key={airplane.id}>
-            <strong>
-              {airplane.name}
-            </strong>
+            <Link
+to={`/detail/${airplane.id}`}
+>
+
+<strong>
+{airplane.name}
+</strong>
+
+</Link>
 
             <br />
 
