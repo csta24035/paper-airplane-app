@@ -3,16 +3,29 @@ type Props = {
 };
 
 function ListPage({ children }: Props) {
+  // 1. ロゴの文字を1文字ずつの配列にする
+  const logoText = "GLIDELOG".split("");
+
+  // 2. 1文字ずつにあてる未来感のあるネオンカラーの配列（好きな色に変えられます！）
+  const neonColors = [
+    "#ff0055", // G: ピンク
+    "#00e5ff", // L: 水色
+    "#00ff66", // I: ライムグリーン
+    "#ffaa00", // D: オレンジ
+    "#b800ff", // E: パープル
+    "#ff0055", // L: ピンク（リピート）
+    "#00e5ff", // O: 水色
+    "#00ff66", // G: ライムグリーン
+  ];
+
   return (
-  
     <div style={{ 
-      backgroundColor: '#121214', // 背景色（ダークグレー）
-      minHeight: '100vh',         // 画面の縦幅いっぱいに背景を広げる
-      color: '#ffffff',           // 基本の文字色を白にして見やすく
-      padding: '20px',            // 画面端の余白（お好みで調整）
+      backgroundColor: '#121214', 
+      minHeight: '100vh',         
+      color: '#ffffff',           
+      padding: '20px',            
       boxSizing: 'border-box'
     }}>
-      {/* 1. 英語(Orbitron)と日本語(DotGothic16)のテック系フォントを両方読み込み */}
       <style>
         @import url('https://fonts.googleapis.com/css2?family=DotGothic16&family=Orbitron:wght@700&display=swap');
       </style>
@@ -24,9 +37,16 @@ function ListPage({ children }: Props) {
           fontSize: '1.6em', 
           letterSpacing: '3px',
           textTransform: 'uppercase',
-          color: '#00e5ff'
         }}>
-          GlideLog
+          {/* ★ 配列をループさせて1文字ずつ<span>で色をあてる */}
+          {logoText.map((char, index) => (
+            <span 
+              key={index} 
+              style={{ color: neonColors[index % neonColors.length] }}
+            >
+              {char}
+            </span>
+          ))}
         </span>
         
         <br /><br />
@@ -36,7 +56,7 @@ function ListPage({ children }: Props) {
           display: 'block', 
           fontSize: '0.625em', 
           fontWeight: 'normal', 
-          color: '#aaa', 
+          color: '#00e5ff', 
           fontFamily: '"DotGothic16", sans-serif', 
           letterSpacing: '2px' 
         }}>
