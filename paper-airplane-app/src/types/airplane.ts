@@ -6,12 +6,10 @@ export interface Instruction {
   images: string[];
 }
 
-export interface AirplaneRecord {
+export interface Airplane {
   id: string;
 
   name: string;
-
-  completedImages: string[];
 
   distance?: number;
 
@@ -19,7 +17,9 @@ export interface AirplaneRecord {
 
   createdDate?: string;
 
-  memo?: string;
+  memo: string;
+
+  completedImages: string[];
 
   instructions: Instruction[];
 

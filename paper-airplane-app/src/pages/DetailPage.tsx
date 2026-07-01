@@ -1,169 +1,169 @@
-import {
-  useEffect,
-  useState,
-} from "react";
-
-import {
-  useNavigate,
-  useParams,
-} from "react-router-dom";
-
-import {
-  getAirplaneById,
-} from "../db/indexedDb";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { getAllAirplanes } from "../db/indexedDb";
+import type {
+  Airplane,
+  Instruction,
+} from "../types/airplane";
 
 function DetailPage() {
   const { id } = useParams();
-  const navigate =
-  useNavigate();
 
-  const [
-    airplane,
-    setAirplane,
-  ] = useState<any>(null);
+  const [airplane,
+setAirplane]=
+useState<Airplane | null>(
+null
+);
 
   useEffect(() => {
-    async function load() {
-      if (!id) return;
-
-      const data =
-        await getAirplaneById(id);
-
-      setAirplane(data);
-    }
-
     load();
-  }, [id]);
+  }, []);
+
+  async function load() {
+    const airplanes =
+      await getAllAirplanes();
+
+    const target =
+airplanes.find(
+(a: Airplane)=> a.id === id
+      );
+
+    setAirplane(target);
+  }
 
   if (!airplane) {
     return (
       <div style={{ padding: 20 }}>
-        読み込み中...
+        <p>読み込み中...</p>
       </div>
     );
   }
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1>
-        紙飛行機詳細
-      </h1>
+    <div
+      style={{
+        padding: 20,
+      }}
+    >
+      <Link to="/">
+        ← 一覧へ戻る
+      </Link>
 
-      <h2>
-        {airplane.name}
-      </h2>
+      <h1>{airplane.name}</h1>
 
-      {airplane.completedImages?.length >
-      0 ? (
-        <img
-          src={
-            airplane.completedImages[0]
-          }
-          alt={airplane.name}
-          style={{
-  width: "100%",
-  maxWidth: "500px",
-  borderRadius: "8px",
-}}
-        />
+      <h2>完成画像</h2>
+
+      {airplane.completedImages
+        ?.length > 0 ? (
+        airplane.completedImages.map(
+          (
+            image: string,
+            index: number
+          ) => (
+            <img
+              key={index}
+              src={image}
+              alt=""
+              width={250}
+              style={{
+                marginRight: 10,
+                marginBottom: 10,
+              }}
+            />
+          )
+        )
       ) : (
-        <div
-          style={{
-            width: 300,
-            height: 180,
-            border:
-              "1px solid gray",
-            display: "flex",
-            alignItems:
-              "center",
-            justifyContent:
-              "center",
-          }}
-        >
-          No Image
-        </div>
+        <p>画像なし</p>
       )}
 
+      <hr />
+
       <p>
-        飛距離：
+        <strong>飛距離：</strong>
+
         {airplane.distance ??
           "-"}
         m
       </p>
 
       <p>
-        折る回数：
+        <strong>折る回数：</strong>
+
         {airplane.foldCount ??
           "-"}
         回
       </p>
 
       <p>
-        作成日：
+        <strong>作成日：</strong>
+
         {airplane.createdDate ??
           "-"}
       </p>
-      <h3>
-折り方
-</h3>
 
-{airplane.instructions
-?.length === 0 ? (
-
-<p>
-登録されていません
-</p>
-
-) : (
-
-airplane.instructions.map(
-(step: any,index:number)=>(
-
-<div key={step.id}>
-
-<h4>
-手順{index+1}
-</h4>
-
-<p>
-{step.text}
-</p>
-
-</div>
-
-))
-
-)}
-
-<p>
-まだ登録されていません
-</p>
-
-      <p>
-        備考：
-        {airplane.memo ||
-          "-"}
-      </p>
-      <button
-  onClick={() =>
-    navigate("/")
-  }
->
-  編集する
-</button>
-
-{" "}
       <hr />
 
-<button
-  onClick={() => navigate("/")}
->
-  ← 一覧へ戻る
-</button>
+      <h2>折り方</h2>
+
+      {airplane.instructions
+        ?.length > 0 ? (
+        airplane.instructions.map(
+          (
+            instruction: Instruction,
+            index: number
+          ) => (
+            <div
+              key={instruction.id}
+              style={{
+                border:
+                  "1px solid #ccc",
+                padding: 10,
+                marginBottom: 20,
+              }}
+            >
+              <h3>
+                手順
+                {index + 1}
+              </h3>
+
+              <p>
+                {instruction.text ||
+                  "説明なし"}
+              </p>
+
+              {instruction.images.map(
+                (
+                  image: string,
+                  imageIndex: number
+                ) => (
+                  <img
+                    key={imageIndex}
+                    src={image}
+                    alt=""
+                    width={180}
+                    style={{
+                      marginRight: 10,
+                      marginBottom: 10,
+                    }}
+                  />
+                )
+              )}
+            </div>
+          )
+        )
+      ) : (
+        <p>折り方なし</p>
+      )}
+
+      <hr />
+
+      <h2>備考</h2>
+
+      <p>
+        {airplane.memo || "-"}
+      </p>
     </div>
-    
   );
-  
 }
 
 export default DetailPage;

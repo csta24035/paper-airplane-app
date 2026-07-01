@@ -1,5 +1,5 @@
 import { openDB } from "idb";
-import type { AirplaneRecord } from "../types/airplane";
+import type { Airplane } from "../types/airplane";
 
 export const dbPromise = openDB(
   "paper-airplane-db",
@@ -31,7 +31,7 @@ export async function initDb() {
 }
 
 export async function saveAirplane(
-  airplane: AirplaneRecord
+  airplane: Airplane
 ) {
   const db = await dbPromise;
 
@@ -56,7 +56,7 @@ export async function getAllAirplanes() {
   );
 }
 export async function updateAirplane(
-  airplane: AirplaneRecord
+  airplane: Airplane
 ) {
   const db = await dbPromise;
 

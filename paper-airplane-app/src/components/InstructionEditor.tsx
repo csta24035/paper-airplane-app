@@ -1,3 +1,4 @@
+//InstructionEditor.tsx
 type Instruction = {
   id: string;
   text: string;
@@ -17,6 +18,11 @@ type Props = {
   id: string,
   text: string
 ) => void;
+
+    onImageChange: (
+    id: string,
+    files: FileList | null
+)=>void;
 };
 
 function InstructionEditor({
@@ -24,6 +30,7 @@ function InstructionEditor({
   onAdd,
   onRemove,
   onTextChange,
+  onImageChange,
 }: Props) {
   return (
     <>
@@ -52,6 +59,7 @@ function InstructionEditor({
               {index + 1}
             </h3>
 
+
             <textarea
   rows={4}
   cols={40}
@@ -67,6 +75,46 @@ function InstructionEditor({
     )
   }
 />
+
+<br />
+
+<input
+type="file"
+accept=".jpg,.jpeg,.png"
+multiple
+onChange={(e)=>
+onImageChange(
+instruction.id,
+e.target.files
+)
+}
+/>
+
+<div
+style={{
+display:"flex",
+gap:10,
+flexWrap:"wrap",
+marginTop:10,
+}}
+>
+
+{instruction.images.map(
+(image,index)=>(
+
+<img
+key={index}
+src={image}
+alt=""
+width={120}
+/>
+
+)
+
+)}
+
+</div>
+
 
 <div>
   {instruction.text.length}

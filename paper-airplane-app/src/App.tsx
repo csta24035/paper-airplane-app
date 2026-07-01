@@ -1,12 +1,5 @@
+//App.tsx
 import { useEffect, useState } from "react";
-import {
-  initDb,
-  saveAirplane,
-  updateAirplane,
-  deleteAirplane,
-  getAirplaneCount,
-  getAllAirplanes,
-} from "./db/indexedDb";
 import { resizeImage } from "./utils/image";
 import { fileToBase64 } from "./utils/file";
 import SearchSort from "./components/SearchSort";
@@ -21,6 +14,20 @@ import ListPage from "./pages/ListPage";
 import DetailPage from "./pages/DetailPage";
 import InstructionEditor
 from "./components/InstructionEditor";
+import type { Airplane, Instruction} from "./types/airplane";
+import { useInstructions } from "./hooks/useInstructions";
+import {
+  validateName,
+  validateDistance,
+  validateFoldCount,
+  validateMemo,
+} from "./utils/validation";
+import { useAirplanes } from "./hooks/useAirplanes";
+import { useImageUploader } from "./hooks/useImageUploader";
+import { initDb } from "./db/indexedDb";
+import { editAirplane } from "./hooks/useEditAirplane";
+import { useFilteredAirplanes }
+from "./hooks/useFilteredAirplanes";
 
 function App() {
   const [name, setName] =
@@ -44,9 +51,6 @@ function App() {
   const [success, setSuccess] =
     useState("");
 
-  const [airplanes, setAirplanes] =
-    useState<any[]>([]);
-
   const [searchKeyword, setSearchKeyword] =
     useState("");
 
@@ -59,56 +63,58 @@ function App() {
   const [editingId, setEditingId] =
     useState<string | null>(null);
 
-  const [editingCreatedAt, setEditingCreatedAt] =
+  const [editingCreatedAt, setEditingCreatedAt, ] =
     useState<number | null>(null);
 
-  const [completedImages, setCompletedImages] =
-    useState<File[]>([]);
+  const {instructions, setInstructions,} = 
+    useInstructions();
 
-  const [instructions, setInstructions] =
-    useState([
+  const { airplanes, loadAirplanes, removeAirplane, save, } = 
+    useAirplanes();
+
+  const{ completedImages, setCompletedImages, handleCompletedImageChange,} =
+    useImageUploader(); 
+
+ async function
+onCompletedImageChange(
+event:
+React.ChangeEvent<HTMLInputElement>
+){
+
+try{
+
+await
+handleCompletedImageChange(
+event
+);
+
+setError("");
+
+}catch(error){
+
+if(error instanceof Error){
+
+setError(
+error.message
+);}}}   
+
+function handleEdit(
+  airplane: Airplane
+) {
+  editAirplane(
+    airplane,
     {
-      id: crypto.randomUUID(),
-      text: "",
-      images: [],
-    },
-  ]);
+      setEditingId,
+      setEditingCreatedAt,
 
-  useEffect(() => {
-  initDb();
-  loadAirplanes();
-}, []);
+      setName,
+      setDistance,
+      setFoldCount,
+      setCreatedDate,
+      setMemo,
 
-  async function loadAirplanes() {
-  const data =
-    await getAllAirplanes();
-
-  setAirplanes(data);
-}
-
-function handleEdit(airplane: any) {
-  setEditingId(airplane.id);
-
-  setName(airplane.name);
-
-  setDistance(
-    airplane.distance?.toString() ?? ""
-  );
-
-  setFoldCount(
-    airplane.foldCount?.toString() ?? ""
-  );
-
-  setCreatedDate(
-    airplane.createdDate ?? ""
-  );
-
-  setMemo(
-    airplane.memo ?? ""
-  );
-
-  setEditingCreatedAt(
-    airplane.createdAt
+      setInstructions,
+    }
   );
 }
 
@@ -122,7 +128,7 @@ async function handleDelete(id: string) {
   }
 
   try {
-    await deleteAirplane(id);
+    await removeAirplane(id);
 
     // 編集中のデータを削除した場合
     if (editingId === id) {
@@ -136,58 +142,12 @@ async function handleDelete(id: string) {
       setMemo("");
     }
 
-    await loadAirplanes();
-
     setSuccess("削除しました");
     setError("");
   } catch (error) {
     console.error(error);
     setError("削除に失敗しました");
   }
-}
-
-async function handleCompletedImageChange(
-  event: React.ChangeEvent<HTMLInputElement>
-) {
-  const files = event.target.files;
-
-  if (!files) {
-    return;
-  }
-
-  const fileArray = Array.from(files);
-
-  if (fileArray.length > 3) {
-    setError("完成画像は3枚までです");
-    return;
-  }
-
-  for (const file of fileArray) {
-    if (
-      file.type !== "image/jpeg" &&
-      file.type !== "image/png"
-    ) {
-      setError("JPGまたはPNGのみ登録できます");
-      return;
-    }
-
-    if (file.size > 10 * 1024 * 1024) {
-      setError("画像は1枚10MB以下です");
-      return;
-    }
-  }
-
-const resizedFiles: File[] = [];
-
-for (const file of fileArray) {
-  const resized =
-    await resizeImage(file);
-
-  resizedFiles.push(resized);
-}
-
-setCompletedImages(resizedFiles);
-  setError("");
 }
 
 function addInstruction() {
@@ -216,6 +176,86 @@ function removeInstruction(
   });
 }
  
+ async function updateInstructionImages(
+  id: string,
+  files: FileList | null
+) {
+  if (!files) {
+    return;
+  }
+
+  const selectedFiles = Array.from(files);
+
+  // 全手順の画像枚数
+  const currentImageCount =
+    instructions.reduce(
+      (sum, instruction) =>
+        sum +
+        instruction.images.length,
+      0
+    );
+
+  if (
+    currentImageCount +
+      selectedFiles.length >
+    50
+  ) {
+    setError(
+      "折り方画像は合計50枚までです"
+    );
+    return;
+  }
+
+  const imageStrings: string[] = [];
+
+  for (const file of selectedFiles) {
+
+    if (
+      file.type !== "image/jpeg" &&
+      file.type !== "image/png"
+    ) {
+      setError(
+        "JPG・PNGのみ登録できます"
+      );
+      return;
+    }
+
+    if (
+      file.size >
+      10 * 1024 * 1024
+    ) {
+      setError(
+        "画像は10MB以下です"
+      );
+      return;
+    }
+
+    const resized =
+      await resizeImage(file);
+
+    const base64 =
+      await fileToBase64(resized);
+
+    imageStrings.push(base64);
+  }
+
+  setInstructions((prev) =>
+    prev.map((instruction) =>
+      instruction.id === id
+        ? {
+            ...instruction,
+            images: [
+              ...instruction.images,
+              ...imageStrings,
+            ],
+          }
+        : instruction
+    )
+  );
+
+  setError("");
+}
+
  function updateInstructionText(
   id: string,
   text: string
@@ -233,220 +273,56 @@ function removeInstruction(
 }
 
   const filteredAirplanes =
-  airplanes
-    .filter((airplane) =>
-      airplane.name
-        .toLowerCase()
-        .includes(
-          searchKeyword.toLowerCase()
-        )
-    )
-    .sort((a, b) => {
-      let result = 0;
-
-      switch (sortField) {
-        case "name":
-          result = a.name.localeCompare(
-            b.name
-          );
-          break;
-
-        case "distance":
-          result =
-            (a.distance ?? 0) -
-            (b.distance ?? 0);
-          break;
-
-        case "foldCount":
-          result =
-            (a.foldCount ?? 0) -
-            (b.foldCount ?? 0);
-          break;
-
-        case "createdDate":
-          result = (
-            a.createdDate ?? ""
-          ).localeCompare(
-            b.createdDate ?? ""
-          );
-          break;
-
-        default:
-          result =
-            a.createdAt -
-            b.createdAt;
-      }
-
-      return sortOrder === "asc"
-        ? result
-        : -result;
-    });
+  useFilteredAirplanes({
+    airplanes,
+    searchKeyword,
+    sortField,
+    sortOrder,
+  });
 
   async function handleSave() {
-    setError("");
-    setSuccess("");
+  await saveCurrentAirplane({
+    editingId,
+    editingCreatedAt,
 
-    if (
-      name.trim().length < 1
-    ) {
-      setError(
-        "名前は必須です"
-      );
-      return;
-    }
+    name,
+    distance,
+    foldCount,
+    createdDate,
+    memo,
 
-    if (
-      name.length > 100
-    ) {
-      setError(
-        "名前は100文字以内です"
-      );
-      return;
-    }
+    completedImages,
+    instructions,
 
-    if (distance !== "") {
-  const distanceValue =
-    Number(distance);
+    loadAirplanes,
 
-  if (
-    Number.isNaN(distanceValue)
-  ) {
-    setError(
-      "飛距離は数値で入力してください"
-    );
-    return;
-  }
+    setError,
+    setSuccess,
 
-  if (
-    distanceValue < 0.1 ||
-    distanceValue > 9999.9
-  ) {
-    setError(
-      "飛距離は0.1〜9999.9mです"
-    );
-    return;
-  }
+    resetForm,
+  });
 }
 
-if (foldCount !== "") {
-  const foldCountValue =
-    Number(foldCount);
+function resetForm() {
+  setName("");
+  setDistance("");
+  setFoldCount("");
+  setCreatedDate("");
+  setMemo("");
 
-  if (
-    !Number.isInteger(
-      foldCountValue
-    )
-  ) {
-    setError(
-      "折る回数は整数で入力してください"
-    );
-    return;
-  }
+  setCompletedImages([]);
 
-  if (
-    foldCountValue < 0 ||
-    foldCountValue > 999
-  ) {
-    setError(
-      "折る回数は0〜999回です"
-    );
-    return;
-  }
+  setInstructions([
+    {
+      id: crypto.randomUUID(),
+      text: "",
+      images: [],
+    },
+  ]);
+
+  setEditingId(null);
+  setEditingCreatedAt(null);
 }
-
-    if (
-      memo.length > 256
-    ) {
-      setError(
-        "備考は256文字以内です"
-      );
-      return;
-    }
-
-    const count =
-      await getAirplaneCount();
-
-    if (count >= 100) {
-      setError(
-        "最大100件登録済みです"
-      );
-      return;
-    }
-
-    try {
-      const imageStrings: string[] = [];
-
-for (const image of completedImages) {
-  const base64 =
-    await fileToBase64(image);
-
-  imageStrings.push(base64);
-}
-      const airplane = {
-  id:
-    editingId ??
-    crypto.randomUUID(),
-
-  name,
-
-  distance:
-    distance === ""
-      ? undefined
-      : Number(distance),
-
-  foldCount:
-    foldCount === ""
-      ? undefined
-      : Number(foldCount),
-
-  createdDate:
-    createdDate || undefined,
-
-  memo,
-
-  completedImages: imageStrings,
-
-  instructions,
-
-  createdAt:
-  editingCreatedAt ??
-  Date.now(),
-};
-
-if (editingId) {
-  await updateAirplane(airplane);
-} else {
-  await saveAirplane(airplane);
-}
-
-      setSuccess(
-        "保存しました"
-      );
-
-      await loadAirplanes();
-
-      setName("");
-      setDistance("");
-      setFoldCount("");
-      setCreatedDate("");
-      setMemo("");
-      setCompletedImages([]);
-
-      setEditingId(null);
-      setEditingCreatedAt(
-        null
-      );
-
-    } catch (error) {
-      console.error(
-        error
-      );
-
-      setError(
-        "保存に失敗しました"
-      );
-    }
-  }
 
   return (
     <HashRouter>
@@ -468,21 +344,20 @@ if (editingId) {
               memo={memo}
               setMemo={setMemo}
               completedImages={completedImages}
-              handleCompletedImageChange={
-    handleCompletedImageChange
-  }
+              handleCompletedImageChange={ onCompletedImageChange }
   handleSave={handleSave}
   editingId={editingId}
   error={error}
   success={success}
 />
 <InstructionEditor
-  instructions={instructions}
-  onAdd={addInstruction}
-  onRemove={removeInstruction}
-  onTextChange={
-    updateInstructionText
-  }
+instructions={instructions}
+onAdd={addInstruction}
+onRemove={removeInstruction}
+onTextChange={updateInstructionText}
+onImageChange={
+updateInstructionImages
+}
 />
 
       <br />

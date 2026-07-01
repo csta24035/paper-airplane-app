@@ -1,11 +1,16 @@
 //AirplaneList.tsx
+import type {
+  Airplane,
+} from "../types/airplane";
 import {
 Link
 } from "react-router-dom";
 type Props = {
-  airplanes: any[];
+  airplanes: Airplane[];
 
-  onEdit: (airplane: any) => void;
+onEdit: (
+  airplane: Airplane
+)=>void;
 
   onDelete: (id: string) => void;
 };
