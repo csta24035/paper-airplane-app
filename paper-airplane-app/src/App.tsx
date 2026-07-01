@@ -17,9 +17,10 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-
 import ListPage from "./pages/ListPage";
 import DetailPage from "./pages/DetailPage";
+import InstructionEditor
+from "./components/InstructionEditor";
 
 function App() {
   const [name, setName] =
@@ -63,6 +64,15 @@ function App() {
 
   const [completedImages, setCompletedImages] =
     useState<File[]>([]);
+
+  const [instructions, setInstructions] =
+    useState([
+    {
+      id: crypto.randomUUID(),
+      text: "",
+      images: [],
+    },
+  ]);
 
   useEffect(() => {
   initDb();
@@ -178,6 +188,48 @@ for (const file of fileArray) {
 
 setCompletedImages(resizedFiles);
   setError("");
+}
+
+function addInstruction() {
+  setInstructions((prev) => [
+    ...prev,
+    {
+      id: crypto.randomUUID(),
+      text: "",
+      images: [],
+    },
+  ]);
+}
+
+function removeInstruction(
+  id: string
+) {
+  setInstructions((prev) => {
+    if (prev.length === 1) {
+      return prev;
+    }
+
+    return prev.filter(
+      (item) =>
+        item.id !== id
+    );
+  });
+}
+ 
+ function updateInstructionText(
+  id: string,
+  text: string
+) {
+  setInstructions((prev) =>
+    prev.map((instruction) =>
+      instruction.id === id
+        ? {
+            ...instruction,
+            text,
+          }
+        : instruction
+    )
+  );
 }
 
   const filteredAirplanes =
@@ -354,7 +406,7 @@ for (const image of completedImages) {
 
   completedImages: imageStrings,
 
-  instructions: [],
+  instructions,
 
   createdAt:
   editingCreatedAt ??
@@ -399,30 +451,38 @@ if (editingId) {
   return (
     <HashRouter>
     <Routes>
-<Route
-path="/"
-element={
-<ListPage>
+      <Route
+        path="/"
+        element={
+          <ListPage>
 
-<AirplaneForm
-  name={name}
-  setName={setName}
-  distance={distance}
-  setDistance={setDistance}
-  foldCount={foldCount}
-  setFoldCount={setFoldCount}
-  createdDate={createdDate}
-  setCreatedDate={setCreatedDate}
-  memo={memo}
-  setMemo={setMemo}
-  completedImages={completedImages}
-  handleCompletedImageChange={
+            <AirplaneForm
+              name={name}
+              setName={setName}
+              distance={distance}
+              setDistance={setDistance}
+              foldCount={foldCount}
+              setFoldCount={setFoldCount}
+              createdDate={createdDate}
+              setCreatedDate={setCreatedDate}
+              memo={memo}
+              setMemo={setMemo}
+              completedImages={completedImages}
+              handleCompletedImageChange={
     handleCompletedImageChange
   }
   handleSave={handleSave}
   editingId={editingId}
   error={error}
   success={success}
+/>
+<InstructionEditor
+  instructions={instructions}
+  onAdd={addInstruction}
+  onRemove={removeInstruction}
+  onTextChange={
+    updateInstructionText
+  }
 />
 
       <br />

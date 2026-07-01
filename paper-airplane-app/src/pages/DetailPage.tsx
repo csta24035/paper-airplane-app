@@ -107,6 +107,34 @@ function DetailPage() {
 折り方
 </h3>
 
+{airplane.instructions
+?.length === 0 ? (
+
+<p>
+登録されていません
+</p>
+
+) : (
+
+airplane.instructions.map(
+(step: any,index:number)=>(
+
+<div key={step.id}>
+
+<h4>
+手順{index+1}
+</h4>
+
+<p>
+{step.text}
+</p>
+
+</div>
+
+))
+
+)}
+
 <p>
 まだ登録されていません
 </p>

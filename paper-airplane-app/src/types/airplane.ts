@@ -1,7 +1,9 @@
-export interface StepInstruction {
+export interface Instruction {
   id: string;
+
   text: string;
-  imageIds: string[];
+
+  images: string[];
 }
 
 export interface AirplaneRecord {
@@ -19,7 +21,7 @@ export interface AirplaneRecord {
 
   memo?: string;
 
-  instructions: StepInstruction[];
+  instructions: Instruction[];
 
   createdAt: number;
 }
