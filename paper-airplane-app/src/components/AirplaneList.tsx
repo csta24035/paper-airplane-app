@@ -119,7 +119,7 @@ to={`/detail/${airplane.id}`}
                 onEdit(airplane)
               }
             >
-              編集
+              編集(クリックしたら↑に戻って!)
             </button>
 
             {" "}
