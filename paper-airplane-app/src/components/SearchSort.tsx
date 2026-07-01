@@ -17,82 +17,78 @@ function SearchSort({
   sortOrder,
   setSortOrder,
 }: Props) {
-  return (
-    <>
-      <hr />
+  
+  // 周りの文字色を絶対に白にする
+  const whiteTextStyle = {
+    color: '#ffffff',
+  };
 
-      <h2>検索・ソート</h2>
+  const formInputStyle = {
+    color: '#000000', 
+    backgroundColor: '#ffffff',
+    border: '1px solid #cccccc',
+    borderRadius: '4px',
+    padding: '6px 10px',
+    fontSize: '1rem',
+    outline: 'none'
+  };
+
+  const optionStyle = {
+    backgroundColor: '#ffffff',
+    color: '#000000'
+  };
+
+  return (
+    <div style={whiteTextStyle}>
+      <hr style={{ borderColor: '#444444' }} />
+
+      <h2 style={whiteTextStyle}>検索・ソート</h2>
 
       <div>
-        <label>名前検索</label>
-
+        <label style={whiteTextStyle}>名前検索</label>
         <br />
-
         <input
           type="text"
           value={searchKeyword}
-          onChange={(e) =>
-            setSearchKeyword(e.target.value)
-          }
+          style={formInputStyle}
+          onChange={(e) => setSearchKeyword(e.target.value)}
         />
       </div>
 
       <br />
 
       <div>
-        <label>ソート項目</label>
-
+        <label style={whiteTextStyle}>ソート項目</label>
         <br />
-
         <select
           value={sortField}
-          onChange={(e) =>
-            setSortField(e.target.value)
-          }
+          style={formInputStyle}
+          onChange={(e) => setSortField(e.target.value)}
         >
-          <option value="name">
-            名前
-          </option>
-
-          <option value="distance">
-            飛距離
-          </option>
-
-          <option value="foldCount">
-            折る回数
-          </option>
-
-          <option value="createdDate">
-            作成日
-          </option>
+          <option value="name" style={optionStyle}>名前</option>
+          <option value="distance" style={optionStyle}>飛距離</option>
+          <option value="foldCount" style={optionStyle}>折る回数</option>
+          <option value="createdDate" style={optionStyle}>作成日</option>
         </select>
       </div>
 
       <br />
 
       <div>
-        <label>並び順</label>
-
+        <label style={whiteTextStyle}>並び順</label>
         <br />
-
         <select
           value={sortOrder}
-          onChange={(e) =>
-            setSortOrder(e.target.value)
-          }
+          style={formInputStyle}
+          onChange={(e) => setSortOrder(e.target.value)}
         >
-          <option value="asc">
-            昇順
-          </option>
-
-          <option value="desc">
-            降順
-          </option>
+          <option value="asc" style={optionStyle}>昇順</option>
+          <option value="desc" style={optionStyle}>降順</option>
         </select>
       </div>
 
-      <hr />
-    </>
+      <hr style={{ borderColor: '#444444' }} />
+    </div>
   );
 }
 
