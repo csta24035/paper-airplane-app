@@ -161,7 +161,7 @@ function AirplaneForm({
       <br />
 
       <button onClick={handleSave}>
-        {editingId ? "更新" : "保存(詳しい折り方は↓から入力!)"}
+        {editingId ? "更新" : "保存(詳しい折り方は↓から入力！)"}
       </button>
 
       {error && (
