@@ -1,3 +1,4 @@
+/*index.css*/
 :root {
   --text: #6b6375;
   --text-h: #08060d;
@@ -51,11 +52,15 @@
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
+  /* 2. 幅を100%にして画面いっぱいに広げる */
+  width: 100%;
+  /* max-width: 1126px; を残すとコンテンツが広がりすぎるのを防げます。お好みで */
   margin: 0 auto;
   text-align: center;
-  border-inline: 1px solid var(--border);
+  
+  /* 3. 画面全体を覆う場合は左右のボーダーを消す（またはお好みで調整） */
+  /* border-inline: 1px solid var(--border); */
+  
   min-height: 100svh;
   display: flex;
   flex-direction: column;
@@ -64,6 +69,9 @@
 
 body {
   margin: 0;
+  /* 1. 背景色を画面全体に適用する */
+  background-color: var(--bg); 
+  color: var(--text);
 }
 
 h1,

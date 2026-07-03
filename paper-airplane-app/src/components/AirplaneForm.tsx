@@ -17,7 +17,7 @@ type Props = {
   memo: string;
   setMemo: (value: string) => void;
 
-  completedImages: File[];
+  completedImages: (File | string)[];
 
   handleCompletedImageChange: (
     event: React.ChangeEvent<HTMLInputElement>
@@ -59,6 +59,16 @@ function AirplaneForm({
 
   success,
 }: Props) {
+  // ★ スマホでの表示を固定するための共通スタイル
+  const inputStyle = {
+    backgroundColor: "#ffffff", // 背景を白に固定
+    color: "#333333",           // 文字色を濃いグレー（または黒）に固定
+    border: "1px solid #ccc",   // 薄いグレーの枠線をつける
+    borderRadius: "4px",        // 角を少し丸くする（お好みで）
+    padding: "6px 8px",         // 内側に少し余白を作る（お好みで）
+    fontSize: "16px",           // iPhoneでズームされるのを防ぐため16px以上がおすすめ
+  };
+
   return (
     <>
       <div>
@@ -73,6 +83,7 @@ function AirplaneForm({
           onChange={(e) =>
             setName(e.target.value)
           }
+          style={inputStyle} // ★ スタイルを適用
         />
       </div>
 
@@ -101,6 +112,7 @@ function AirplaneForm({
           onChange={(e) =>
             setDistance(e.target.value)
           }
+          style={inputStyle} // ★ スタイルを適用
         />
       </div>
 
@@ -119,6 +131,7 @@ function AirplaneForm({
           onChange={(e) =>
             setFoldCount(e.target.value)
           }
+          style={inputStyle} // ★ スタイルを適用
         />
       </div>
 
@@ -137,6 +150,7 @@ function AirplaneForm({
               e.target.value
             )
           }
+          style={inputStyle} // ★ スタイルを適用
         />
       </div>
 
@@ -155,6 +169,7 @@ function AirplaneForm({
           onChange={(e) =>
             setMemo(e.target.value)
           }
+          style={inputStyle} // ★ スタイルを適用
         />
       </div>
 

@@ -28,7 +28,7 @@ type Props = {
   createdDate: string;
   memo: string;
 
-  completedImages: File[];
+  completedImages: (File | string)[];
   instructions: Instruction[];
 
   loadAirplanes: () => Promise<void>;
@@ -38,22 +38,19 @@ type Props = {
 
   resetForm: () => void;
   
-  // 💡 下部の処理でフォームのクリア関数（setNameなど）を実行しようとしてエラーになるのを防ぐため、
-  // もし必要であれば Props に追加するか、末尾の個別クリア処理を resetForm() に統一してください。
   setName: (v: string) => void;
   setDistance: (v: string) => void;
   setFoldCount: (v: string) => void;
   setCreatedDate: (v: string) => void;
   setMemo: (v: string) => void;
-  setCompletedImages: (v: File[]) => void;
+  // ⭕ 修正箇所1: 引数の型を (File | string)[] に拡張
+  setCompletedImages: (v: (File | string)[]) => void;
   setInstructions: (v: Instruction[]) => void;
   setEditingId: (v: string | null) => void;
   setEditingCreatedAt: (v: number | null) => void;
 };
 
-// ✨ 修正ポイント: 引数で正しく props を受け取り、中身の handleSave という二重の関数定義を削除しました
 export async function saveCurrentAirplane(props: Props) {
-  // 分割代入で props から各変数を取り出す
   const {
     editingId,
     editingCreatedAt,
@@ -108,9 +105,16 @@ export async function saveCurrentAirplane(props: Props) {
   try {
     const imageStrings: string[] = [];
 
+    // ⭕ 修正箇所2: Fileオブジェクトと既存のURL文字列を判別して処理
     for (const image of completedImages) {
-      const base64 = await fileToBase64(image);
-      imageStrings.push(base64);
+      if (image instanceof File) {
+        // 新しく選ばれた File の場合は base64 に変換
+        const base64 = await fileToBase64(image);
+        imageStrings.push(base64);
+      } else if (typeof image === "string") {
+        // 既存の画像URL（文字列）ならそのまま配列に残す
+        imageStrings.push(image);
+      }
     }
     
     const airplane: Airplane = {
@@ -125,7 +129,6 @@ export async function saveCurrentAirplane(props: Props) {
       createdAt: editingCreatedAt ?? Date.now(),
     };
 
-    // DB保存処理 (ファイル内の関数名に合わせて save ではなく saveAirplane もしくは引数フラグによる調整を行ってください)
     if (editingId !== null) {
       await updateAirplane(airplane);
     } else {
@@ -142,7 +145,7 @@ export async function saveCurrentAirplane(props: Props) {
     setFoldCount("");
     setCreatedDate("");
     setMemo("");
-    setCompletedImages([]);
+    setCompletedImages([]); // Propsの型を直したのでここもエラーになりません
     setInstructions([
       {
         id: crypto.randomUUID(),

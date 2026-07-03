@@ -2,8 +2,9 @@ import { useState } from "react";
 import { resizeImage } from "../utils/image";
 
 export function useImageUploader() {
+  // ⭕ 既存の画像URL（string）も受け入れられるように型を (File | string)[] に拡張
   const [completedImages, setCompletedImages] =
-    useState<File[]>([]);
+    useState<(File | string)[]>([]);
 
   async function handleCompletedImageChange(
     event: React.ChangeEvent<HTMLInputElement>
@@ -20,7 +21,8 @@ export function useImageUploader() {
       throw new Error("完成画像は3枚までです");
     }
 
-    const resizedFiles: File[] = [];
+    // ⭕ Stateの型に合わせてここも (File | string)[] に拡張
+    const resizedFiles: (File | string)[] = [];
 
     for (const file of fileArray) {
       if (

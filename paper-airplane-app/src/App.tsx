@@ -1,5 +1,4 @@
-// App.tsx
-import { useState } from "react"; // ✨ 修正: 使っていない useEffect を削除
+import { useState } from "react";
 import { resizeImage } from "./utils/image";
 import { fileToBase64 } from "./utils/file";
 import SearchSort from "./components/SearchSort";
@@ -17,7 +16,6 @@ import type { Airplane } from "./types/airplane";
 import { useInstructions } from "./hooks/useInstructions";
 import { useAirplanes } from "./hooks/useAirplanes";
 import { useImageUploader } from "./hooks/useImageUploader";
-import { editAirplane } from "./hooks/useEditAirplane";
 import { useFilteredAirplanes } from "./hooks/useFilteredAirplanes";
 import { saveCurrentAirplane } from "./hooks/useSaveAirplane";
 
@@ -36,8 +34,29 @@ function App() {
   const [editingCreatedAt, setEditingCreatedAt] = useState<number | null>(null);
 
   const { instructions, setInstructions } = useInstructions();
-  const { airplanes, loadAirplanes, removeAirplane } = useAirplanes(); // ✨ 修正: 使っていない save を削除
+  const { airplanes, loadAirplanes, removeAirplane } = useAirplanes();
   const { completedImages, setCompletedImages, handleCompletedImageChange } = useImageUploader(); 
+
+  // ★ 編集ボタンがクリックされた時の正しい処理
+  const handleEdit = (airplane: Airplane) => {
+    setEditingId(airplane.id);
+    setEditingCreatedAt(airplane.createdAt);
+    setName(airplane.name);
+    
+    // 型エラー対策: number型をstring型に変換してフォームのStateにセットする
+    setDistance(airplane.distance !== undefined && airplane.distance !== null ? String(airplane.distance) : "");
+    setFoldCount(airplane.foldCount !== undefined && airplane.foldCount !== null ? String(airplane.foldCount) : "");
+    setCreatedDate(airplane.createdDate ?? "");
+    setMemo(airplane.memo ?? "");
+    
+    // 既存の画像URL(string[])をフォーム側の画像Stateにそのまま渡すことで、消えるのを防ぐ
+    setCompletedImages(airplane.completedImages ?? []);
+    
+    // 折り方手順データがある場合はそれもセット
+    if (airplane.instructions) {
+      setInstructions(airplane.instructions);
+    }
+  };
 
   async function onCompletedImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     try {
@@ -50,19 +69,6 @@ function App() {
     }
   }   
 
-  function handleEdit(airplane: Airplane) {
-    editAirplane(airplane, {
-      setEditingId,
-      setEditingCreatedAt,
-      setName,
-      setDistance,
-      setFoldCount,
-      setCreatedDate,
-      setMemo,
-      setInstructions,
-    });
-  }
-
   async function handleDelete(id: string) {
     const result = window.confirm("この紙飛行機を削除しますか？");
     if (!result) return;
@@ -70,13 +76,7 @@ function App() {
     try {
       await removeAirplane(id);
       if (editingId === id) {
-        setEditingId(null);
-        setEditingCreatedAt(null);
-        setName("");
-        setDistance("");
-        setFoldCount("");
-        setCreatedDate("");
-        setMemo("");
+        resetForm();
       }
       setSuccess("削除しました");
       setError("");
@@ -160,7 +160,7 @@ function App() {
     sortOrder,
   });
 
-  // ✨ 修正: 前の手順で型定義（Props）に追加した set~ 関数群も含めてすべて渡します
+  // 保存・更新処理の呼び出し
   async function handleSave() {
     await saveCurrentAirplane({
       editingId,
@@ -211,7 +211,7 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={
+          element = {
             <ListPage>
               <AirplaneForm
                 name={name}

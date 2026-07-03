@@ -1,3 +1,4 @@
+// useEditAirplane.ts
 import type {
   Airplane,
   Instruction,
@@ -30,6 +31,11 @@ type Props = {
 
   setMemo: (
     value: string
+  ) => void;
+
+  // ✨ 修正: 完成画像をセットするための型定義を追加
+  setCompletedImages: (
+    images: string[]
   ) => void;
 
   setInstructions: React.Dispatch<
@@ -72,6 +78,11 @@ export function editAirplane(
 
   props.setMemo(
     airplane.memo ?? ""
+  );
+
+  // ✨ 修正: 既存の完成画像をフォームのStateにセットする処理を追加
+  props.setCompletedImages(
+    airplane.completedImages ?? []
   );
 
   props.setInstructions(
