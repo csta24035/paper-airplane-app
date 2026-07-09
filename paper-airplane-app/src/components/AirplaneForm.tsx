@@ -175,9 +175,21 @@ function AirplaneForm({
 
       <br />
 
-      <button onClick={handleSave}>
-        {editingId ? "更新" : "保存(詳しい折り方は↓から入力！)"}
-      </button>
+      <button
+  onClick={handleSave}
+  style={{
+    fontSize: "20px",      // ←文字を大きく
+    fontWeight: "bold",    // ←太字
+    padding: "12px 24px",  // ←クリックできる範囲を広くする
+    borderRadius: "12px",  // ←角を丸くする
+    cursor: "pointer",     // ←マウスカーソルを指にする
+    border: "none",        // ←枠線を消す
+    backgroundColor: "#4CAF50", // ←緑色
+    color: "white",        // ←文字を白
+  }}
+>
+  {editingId ? "更新" : "保存(詳しい折り方は↓から入力！)"}
+</button>
 
       {error && (
         <p style={{ color: "red" }}>
