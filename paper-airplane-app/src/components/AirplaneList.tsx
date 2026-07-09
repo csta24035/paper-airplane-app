@@ -1,4 +1,3 @@
-//AirplaneList.tsx
 import type { Airplane } from "../types/airplane";
 import { Link } from "react-router-dom";
 
@@ -12,23 +11,28 @@ function AirplaneList({ airplanes, onEdit, onDelete }: Props) {
   if (airplanes.length === 0) {
     return (
       <>
-        {/* 1つ目の修正箇所（データが空のとき） */}
         <h2 style={{ color: "white" }}>登録済み紙飛行機</h2>
-
-        <p>該当する紙飛行機はありません</p>
+        {/* 文字が見えるように白に指定 */}
+        <p style={{ color: "white" }}>該当する紙飛行機はありません</p>
       </>
     );
   }
 
   return (
     <>
-      {/* 2つ目の修正箇所（データがあるとき） */}
       <h2 style={{ color: "white" }}>登録済み紙飛行機</h2>
 
-      <ul>
+      {/* <ul> 全体の文字色を白(white)にして、全体の視認性を上げます */}
+      <ul style={{ color: "white" }}>
         {airplanes.map((airplane) => (
-          <li key={airplane.id}>
-            <Link to={`/detail/${airplane.id}`}>
+          <li key={airplane.id} style={{ marginBottom: "20px" }}>
+            {/* Link（aタグ）の文字色を鮮やかな水色（#00ffff）に変更。
+              textDecoration: "underline" を入れるとリンクらしさが出ます。
+            */}
+            <Link 
+              to={`/detail/${airplane.id}`} 
+              style={{ color: "#FFD700", textDecoration: "underline" }}
+            >
               <strong>{airplane.name}</strong>
             </Link>
 
@@ -73,7 +77,7 @@ function AirplaneList({ airplanes, onEdit, onDelete }: Props) {
             </button>
             {" "}
             <button onClick={() => onDelete(airplane.id)}>削除</button>
-            <hr />
+            <hr style={{ borderColor: "#444" }} />
           </li>
         ))}
       </ul>
