@@ -1,4 +1,3 @@
-//AirplaneForm.tsx
 import ImageUploader from "./ImageUploader";
 
 type Props = {
@@ -59,31 +58,31 @@ function AirplaneForm({
 
   success,
 }: Props) {
-  // ★ スマホでの表示を固定するための共通スタイル
+  // ★ スマホとPCで共通してレスポンシブ対応するためのスタイル
   const inputStyle = {
-    backgroundColor: "#ffffff", // 背景を白に固定
-    color: "#333333",           // 文字色を濃いグレー（または黒）に固定
-    border: "1px solid #ccc",   // 薄いグレーの枠線をつける
-    borderRadius: "4px",        // 角を少し丸くする（お好みで）
-    padding: "6px 8px",         // 内側に少し余白を作る（お好みで）
-    fontSize: "16px",           // iPhoneでズームされるのを防ぐため16px以上がおすすめ
+    backgroundColor: "#ffffff", 
+    color: "#333333",           
+    border: "1px solid #ccc",   
+    borderRadius: "4px",        
+    padding: "8px 12px",        
+    fontSize: "16px",            // iPhoneの自動ズーム防止
+
+    width: "100%",               // 基本は横幅いっぱい
+    maxWidth: "400px",           // PCでの最大幅
+    boxSizing: "border-box" as const, 
   };
 
   return (
     <>
       <div>
         <label>名前（必須）</label>
-
         <br />
-
         <input
           type="text"
           value={name}
           maxLength={100}
-          onChange={(e) =>
-            setName(e.target.value)
-          }
-          style={inputStyle} // ★ スタイルを適用
+          onChange={(e) => setName(e.target.value)}
+          style={inputStyle} 
         />
       </div>
 
@@ -91,28 +90,22 @@ function AirplaneForm({
 
       <ImageUploader
         completedImages={completedImages}
-        onChange={
-          handleCompletedImageChange
-        }
+        onChange={handleCompletedImageChange}
       />
 
       <br />
 
       <div>
         <label>飛距離(m)</label>
-
         <br />
-
         <input
           type="number"
           step="0.1"
           min="0.1"
           max="9999.9"
           value={distance}
-          onChange={(e) =>
-            setDistance(e.target.value)
-          }
-          style={inputStyle} // ★ スタイルを適用
+          onChange={(e) => setDistance(e.target.value)}
+          style={inputStyle} 
         />
       </div>
 
@@ -120,18 +113,19 @@ function AirplaneForm({
 
       <div>
         <label>折る回数</label>
-
         <br />
-
         <input
           type="number"
           min="0"
           max="999"
           value={foldCount}
-          onChange={(e) =>
-            setFoldCount(e.target.value)
-          }
-          style={inputStyle} // ★ スタイルを適用
+          onChange={(e) => setFoldCount(e.target.value)}
+          // 💡 width を auto に、maxWidth を none に上書きして最初のサイズ感に戻します
+          style={{
+            ...inputStyle,
+            width: "auto",
+            maxWidth: "none",
+          }}
         />
       </div>
 
@@ -139,18 +133,17 @@ function AirplaneForm({
 
       <div>
         <label>作成日</label>
-
         <br />
-
         <input
           type="date"
           value={createdDate}
-          onChange={(e) =>
-            setCreatedDate(
-              e.target.value
-            )
-          }
-          style={inputStyle} // ★ スタイルを適用
+          onChange={(e) => setCreatedDate(e.target.value)}
+          // 💡 width を auto に、maxWidth を none に上書きして最初のサイズ感に戻します
+          style={{
+            ...inputStyle,
+            width: "auto",
+            maxWidth: "none",
+          }}
         />
       </div>
 
@@ -158,38 +151,36 @@ function AirplaneForm({
 
       <div>
         <label>備考メモ</label>
-
         <br />
-
         <textarea
           value={memo}
           rows={5}
-          cols={40}
           maxLength={256}
-          onChange={(e) =>
-            setMemo(e.target.value)
-          }
-          style={inputStyle} // ★ スタイルを適用
+          onChange={(e) => setMemo(e.target.value)}
+          style={{
+            ...inputStyle,
+            maxWidth: "600px", 
+          }}
         />
       </div>
 
       <br />
 
       <button
-  onClick={handleSave}
-  style={{
-    fontSize: "20px",      // ←文字を大きく
-    fontWeight: "bold",    // ←太字
-    padding: "12px 24px",  // ←クリックできる範囲を広くする
-    borderRadius: "12px",  // ←角を丸くする
-    cursor: "pointer",     // ←マウスカーソルを指にする
-    border: "none",        // ←枠線を消す
-    backgroundColor: "#4CAF50", // ←緑色
-    color: "white",        // ←文字を白
-  }}
->
-  {editingId ? "更新" : "保存(詳しい折り方は↓から入力！)"}
-</button>
+        onClick={handleSave}
+        style={{
+          fontSize: "20px",      
+          fontWeight: "bold",    
+          padding: "12px 24px",  
+          borderRadius: "12px",  
+          cursor: "pointer",     
+          border: "none",        
+          backgroundColor: "#4CAF50", 
+          color: "white",        
+        }}
+      >
+        {editingId ? "更新" : "保存(詳しい折り方は↓から入力！)"}
+      </button>
 
       {error && (
         <p style={{ color: "red" }}>

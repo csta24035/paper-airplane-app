@@ -1,3 +1,4 @@
+//App.tsx
 import { useState } from "react";
 import { resizeImage } from "./utils/image";
 import { fileToBase64 } from "./utils/file";

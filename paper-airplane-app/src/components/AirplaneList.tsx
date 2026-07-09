@@ -26,12 +26,12 @@ function AirplaneList({ airplanes, onEdit, onDelete }: Props) {
       <ul style={{ color: "white" }}>
         {airplanes.map((airplane) => (
           <li key={airplane.id} style={{ marginBottom: "20px" }}>
-            {/* Link（aタグ）の文字色を鮮やかな水色（#00ffff）に変更。
+            {/* Link（aタグ）の文字色を変更。
               textDecoration: "underline" を入れるとリンクらしさが出ます。
             */}
             <Link 
               to={`/detail/${airplane.id}`} 
-              style={{ color: "#FFD700", textDecoration: "underline" }}
+              style={{ color: "#FFD700", textDecoration: "underline", fontSize: "1.5rem" }}
             >
               <strong>{airplane.name}</strong>
             </Link>
@@ -72,11 +72,38 @@ function AirplaneList({ airplanes, onEdit, onDelete }: Props) {
             登録日時：
             {new Date(airplane.createdAt).toLocaleString()}
             <br />
-            <button onClick={() => onEdit(airplane)}>
-              編集(クリックしたら↑に戻って！)
-            </button>
-            {" "}
-            <button onClick={() => onDelete(airplane.id)}>削除</button>
+            <button
+  onClick={() => onEdit(airplane)}
+  style={{
+    fontSize: "18px",         // 文字を大きく
+    fontWeight: "bold",       // 太字
+    padding: "10px 20px",     // クリック範囲を広く
+    borderRadius: "12px",     // 角を丸く
+    border: "none",
+    cursor: "pointer",
+    backgroundColor: "#2196F3", // 青色
+    color: "white",
+    marginRight: "10px",      // 削除ボタンとの間隔
+  }}
+>
+  編集(クリックしたら↑に戻って！)
+</button>
+
+<button
+  onClick={() => onDelete(airplane.id)}
+  style={{
+    fontSize: "18px",
+    fontWeight: "bold",
+    padding: "10px 20px",
+    borderRadius: "12px",
+    border: "none",
+    cursor: "pointer",
+    backgroundColor: "#f44336", // 赤色
+    color: "white",
+  }}
+>
+  削除
+</button>
             <hr style={{ borderColor: "#444" }} />
           </li>
         ))}
