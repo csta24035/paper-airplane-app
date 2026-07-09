@@ -3,7 +3,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const BACKGROUND_IMAGE_URL = 'https://i.imgur.com/o7zyzFi.jpeg'; 
+const BACKGROUND_IMAGE_URL = 'https://i.imgur.com/ThREANs.jpeg'; 
 
 function ListPage({ children }: Props) {
   const logoText = "GLIDELOG".split("");
