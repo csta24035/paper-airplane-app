@@ -42,15 +42,24 @@ function InstructionEditor({
           </h3>
 
           <textarea
-            rows={4}
-            cols={40}
-            maxLength={5000}
-            placeholder="折り方を入力してください"
-            value={instruction.text}
-            onChange={(e) =>
-              onTextChange(instruction.id, e.target.value)
-            }
-          />
+  rows={4}
+  cols={40}
+  maxLength={5000}
+  placeholder="折り方を入力してください"
+  value={instruction.text}
+  onChange={(e) =>
+    onTextChange(instruction.id, e.target.value)
+  }
+  style={{
+    backgroundColor: "#fff", // 白背景
+    color: "#000",           // 黒文字
+    border: "1px solid #ccc",
+    borderRadius: "6px",
+    padding: "8px",
+    width: "100%",
+    boxSizing: "border-box",
+  }}
+/>
 
           <br />
 
