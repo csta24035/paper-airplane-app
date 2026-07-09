@@ -41,6 +41,11 @@ The content is organized as follows:
 
 <directory_structure>
 .gitattributes
+image-1.png
+image-2.png
+image-3.png
+image-4.png
+image.png
 package.json
 paper-airplane-app/.gitignore
 paper-airplane-app/eslint.config.js
@@ -930,10 +935,6 @@ export function validateMemo(
 }
 </file>
 
-<file path="README.md">
-# paper-airplane-app
-</file>
-
 <file path="paper-airplane-app/src/components/SearchSort.tsx">
 type Props = {
   searchKeyword: string;
@@ -1347,157 +1348,6 @@ code {
 }
 </file>
 
-<file path="paper-airplane-app/src/components/ImageUploader.tsx">
-// ImageUploader.tsx
-import React from "react";
-
-type Props = {
-  completedImages: (File | string)[]; 
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-};
-
-export default function ImageUploader({
-  completedImages,
-  onChange,
-}: Props) {
-  return (
-    // 💡 textAlign: 'center' を追加して、全体のテキスト（ラベルや件数）を中央寄せに
-    <div style={{ fontFamily: 'sans-serif', padding: '16px', textAlign: 'center' }}>
-      
-      <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold', color: '#ffffff' }}>
-        完成画像（最大3枚）
-      </label>
-
-      <input
-        type="file"
-        accept=".jpg,.jpeg,.png"
-        multiple
-        onChange={onChange}
-        style={{
-          display: 'block',
-          width: '100%',
-          maxWidth: '300px',
-          // 💡 margin: '0 auto' を追加して、横幅300pxの入力欄自体を中央に寄せます
-          margin: '0 auto', 
-          padding: '10px',
-          backgroundColor: '#ffffff',
-          color: '#333333',
-          border: '2px solid #ccc',
-          borderRadius: '6px',
-          fontSize: '14px'
-        }}
-      />
-
-      <p style={{ marginTop: '12px', color: '#ffffff', fontSize: '14px' }}>
-        選択中：<strong>{completedImages.length}</strong> / 3枚
-      </p>
-    </div>
-  );
-}
-</file>
-
-<file path="paper-airplane-app/src/components/InstructionEditor.tsx">
-//InstructionEditor.tsx
-type Instruction = {
-  id: string;
-  text: string;
-  images: string[];
-};
-
-type Props = {
-  instructions: Instruction[];
-  onAdd: () => void;
-  onRemove: (id: string) => void;
-  onTextChange: (id: string, text: string) => void;
-  onImageChange: (id: string, files: FileList | null) => void;
-};
-
-function InstructionEditor({
-  instructions,
-  onAdd,
-  onRemove,
-  onTextChange,
-  onImageChange,
-}: Props) {
-  return (
-    <>
-      {/* 以下の h2 タグに color スタイルを追加しました */}
-      <h2 style={{ color: "#fff" }}>
-        折り方
-      </h2>
-
-      {instructions.map((instruction, index) => (
-        <div
-          key={instruction.id}
-          style={{
-            border: "1px solid #ccc",
-            padding: 10,
-            marginBottom: 10,
-          }}
-        >
-          <h3>
-            手順
-            {index + 1}
-          </h3>
-
-          <textarea
-            rows={4}
-            cols={40}
-            maxLength={5000}
-            placeholder="折り方を入力してください"
-            value={instruction.text}
-            onChange={(e) =>
-              onTextChange(instruction.id, e.target.value)
-            }
-          />
-
-          <br />
-
-          <input
-            type="file"
-            accept=".jpg,.jpeg,.png"
-            multiple
-            onChange={(e) =>
-              onImageChange(instruction.id, e.target.files)
-            }
-          />
-
-          <div
-            style={{
-              display: "flex",
-              gap: 10,
-              flexWrap: "wrap",
-              marginTop: 10,
-            }}
-          >
-            {instruction.images.map((image, index) => (
-              <img key={index} src={image} alt="" width={120} />
-            ))}
-          </div>
-
-          <div>
-            {instruction.text.length}
-            /5000文字
-          </div>
-
-          <br />
-
-          <button onClick={() => onRemove(instruction.id)}>
-            削除
-          </button>
-        </div>
-      ))}
-
-      <button onClick={onAdd}>＋ 手順追加</button>
-
-      <hr />
-    </>
-  );
-}
-
-export default InstructionEditor;
-</file>
-
 <file path="paper-airplane-app/src/hooks/useSaveAirplane.ts">
 // useSaveAirplane.ts
 import {
@@ -1852,6 +1702,166 @@ export default defineConfig({
 })
 </file>
 
+<file path="paper-airplane-app/src/components/ImageUploader.tsx">
+// ImageUploader.tsx
+import React from "react";
+
+type Props = {
+  completedImages: (File | string)[]; 
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+export default function ImageUploader({
+  completedImages,
+  onChange,
+}: Props) {
+  return (
+    // 💡 textAlign: 'center' を追加して、全体のテキスト（ラベルや件数）を中央寄せに
+    <div style={{ fontFamily: 'sans-serif', padding: '16px', textAlign: 'center' }}>
+      
+      <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold', color: '#ffffff' }}>
+        完成画像（最大3枚）
+      </label>
+
+      <input
+  type="file"
+  accept=".jpg,.jpeg,.png"
+  multiple
+  onChange={onChange}
+  style={{
+    display: 'block',
+    width: '100%',
+    maxWidth: '450px', // 💡 300pxから「450px」などに広げるとPCでも見栄えが良くなります
+    margin: '0 auto', 
+    padding: '12px',   // スマホでも押しやすいように少し厚めに
+    backgroundColor: '#ffffff',
+    color: '#333333',
+    border: '2px solid #ccc',
+    borderRadius: '6px',
+    fontSize: '14px',
+    boxSizing: 'border-box' // 💡 横幅の計算を狂わせないために追加
+  }}
+/>
+
+      <p style={{ marginTop: '12px', color: '#ffffff', fontSize: '14px' }}>
+        選択中：<strong>{completedImages.length}</strong> / 3枚
+      </p>
+    </div>
+  );
+}
+</file>
+
+<file path="paper-airplane-app/src/components/InstructionEditor.tsx">
+//InstructionEditor.tsx
+type Instruction = {
+  id: string;
+  text: string;
+  images: string[];
+};
+
+type Props = {
+  instructions: Instruction[];
+  onAdd: () => void;
+  onRemove: (id: string) => void;
+  onTextChange: (id: string, text: string) => void;
+  onImageChange: (id: string, files: FileList | null) => void;
+};
+
+function InstructionEditor({
+  instructions,
+  onAdd,
+  onRemove,
+  onTextChange,
+  onImageChange,
+}: Props) {
+  return (
+    <>
+      {/* 以下の h2 タグに color スタイルを追加しました */}
+      <h2 style={{ color: "#fff" }}>
+        折り方
+      </h2>
+
+      {instructions.map((instruction, index) => (
+        <div
+          key={instruction.id}
+          style={{
+            border: "1px solid #ccc",
+            padding: 10,
+            marginBottom: 10,
+          }}
+        >
+          <h3>
+            手順
+            {index + 1}
+          </h3>
+
+          <textarea
+  rows={4}
+  cols={40}
+  maxLength={5000}
+  placeholder="折り方を入力してください"
+  value={instruction.text}
+  onChange={(e) =>
+    onTextChange(instruction.id, e.target.value)
+  }
+  style={{
+    backgroundColor: "#fff", // 白背景
+    color: "#000",           // 黒文字
+    border: "1px solid #ccc",
+    borderRadius: "6px",
+    padding: "8px",
+    width: "100%",
+    boxSizing: "border-box",
+  }}
+/>
+
+          <br />
+
+          <input
+            type="file"
+            accept=".jpg,.jpeg,.png"
+            multiple
+            onChange={(e) =>
+              onImageChange(instruction.id, e.target.files)
+            }
+          />
+
+          <div
+            style={{
+              display: "flex",
+              gap: 10,
+              flexWrap: "wrap",
+              marginTop: 10,
+            }}
+          >
+            {instruction.images.map((image, index) => (
+              <img key={index} src={image} alt="" width={120} />
+            ))}
+          </div>
+
+          <div>
+            {instruction.text.length}
+            /5000文字
+          </div>
+
+          <br />
+
+          <button onClick={() => onRemove(instruction.id)}>
+            削除
+          </button>
+        </div>
+      ))}
+
+      <button onClick={onAdd}>＋ 手順追加</button>
+
+      <hr />
+    </>
+  );
+}
+
+export default InstructionEditor;
+</file>
+
 <file path="paper-airplane-app/src/types/airplane.ts">
 export interface Instruction {
   id: string;
@@ -1880,208 +1890,6 @@ export interface Airplane {
 
   createdAt: number;
 }
-</file>
-
-<file path="paper-airplane-app/src/components/AirplaneForm.tsx">
-//AirplaneForm.tsx
-import ImageUploader from "./ImageUploader";
-
-type Props = {
-  name: string;
-  setName: (value: string) => void;
-
-  distance: string;
-  setDistance: (value: string) => void;
-
-  foldCount: string;
-  setFoldCount: (value: string) => void;
-
-  createdDate: string;
-  setCreatedDate: (value: string) => void;
-
-  memo: string;
-  setMemo: (value: string) => void;
-
-  completedImages: (File | string)[];
-
-  handleCompletedImageChange: (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => void;
-
-  handleSave: () => void;
-
-  editingId: string | null;
-
-  error: string;
-
-  success: string;
-};
-
-function AirplaneForm({
-  name,
-  setName,
-
-  distance,
-  setDistance,
-
-  foldCount,
-  setFoldCount,
-
-  createdDate,
-  setCreatedDate,
-
-  memo,
-  setMemo,
-
-  completedImages,
-  handleCompletedImageChange,
-
-  handleSave,
-
-  editingId,
-
-  error,
-
-  success,
-}: Props) {
-  // ★ スマホでの表示を固定するための共通スタイル
-  const inputStyle = {
-    backgroundColor: "#ffffff", // 背景を白に固定
-    color: "#333333",           // 文字色を濃いグレー（または黒）に固定
-    border: "1px solid #ccc",   // 薄いグレーの枠線をつける
-    borderRadius: "4px",        // 角を少し丸くする（お好みで）
-    padding: "6px 8px",         // 内側に少し余白を作る（お好みで）
-    fontSize: "16px",           // iPhoneでズームされるのを防ぐため16px以上がおすすめ
-  };
-
-  return (
-    <>
-      <div>
-        <label>名前（必須）</label>
-
-        <br />
-
-        <input
-          type="text"
-          value={name}
-          maxLength={100}
-          onChange={(e) =>
-            setName(e.target.value)
-          }
-          style={inputStyle} // ★ スタイルを適用
-        />
-      </div>
-
-      <br />
-
-      <ImageUploader
-        completedImages={completedImages}
-        onChange={
-          handleCompletedImageChange
-        }
-      />
-
-      <br />
-
-      <div>
-        <label>飛距離(m)</label>
-
-        <br />
-
-        <input
-          type="number"
-          step="0.1"
-          min="0.1"
-          max="9999.9"
-          value={distance}
-          onChange={(e) =>
-            setDistance(e.target.value)
-          }
-          style={inputStyle} // ★ スタイルを適用
-        />
-      </div>
-
-      <br />
-
-      <div>
-        <label>折る回数</label>
-
-        <br />
-
-        <input
-          type="number"
-          min="0"
-          max="999"
-          value={foldCount}
-          onChange={(e) =>
-            setFoldCount(e.target.value)
-          }
-          style={inputStyle} // ★ スタイルを適用
-        />
-      </div>
-
-      <br />
-
-      <div>
-        <label>作成日</label>
-
-        <br />
-
-        <input
-          type="date"
-          value={createdDate}
-          onChange={(e) =>
-            setCreatedDate(
-              e.target.value
-            )
-          }
-          style={inputStyle} // ★ スタイルを適用
-        />
-      </div>
-
-      <br />
-
-      <div>
-        <label>備考メモ</label>
-
-        <br />
-
-        <textarea
-          value={memo}
-          rows={5}
-          cols={40}
-          maxLength={256}
-          onChange={(e) =>
-            setMemo(e.target.value)
-          }
-          style={inputStyle} // ★ スタイルを適用
-        />
-      </div>
-
-      <br />
-
-      <button onClick={handleSave}>
-        {editingId ? "更新" : "保存(詳しい折り方は↓から入力！)"}
-      </button>
-
-      {error && (
-        <p style={{ color: "red" }}>
-          {error}
-        </p>
-      )}
-
-      {success && (
-        <p style={{ color: "green" }}>
-          {success}
-        </p>
-      )}
-
-      <hr />
-    </>
-  );
-}
-
-export default AirplaneForm;
 </file>
 
 <file path="paper-airplane-app/src/db/indexedDb.ts">
@@ -2166,91 +1974,209 @@ export async function getAirplaneById(
 }
 </file>
 
-<file path="paper-airplane-app/src/components/AirplaneList.tsx">
-//AirplaneList.tsx
-import type { Airplane } from "../types/airplane";
-import { Link } from "react-router-dom";
+<file path="paper-airplane-app/src/components/AirplaneForm.tsx">
+import ImageUploader from "./ImageUploader";
 
 type Props = {
-  airplanes: Airplane[];
-  onEdit: (airplane: Airplane) => void;
-  onDelete: (id: string) => void;
+  name: string;
+  setName: (value: string) => void;
+
+  distance: string;
+  setDistance: (value: string) => void;
+
+  foldCount: string;
+  setFoldCount: (value: string) => void;
+
+  createdDate: string;
+  setCreatedDate: (value: string) => void;
+
+  memo: string;
+  setMemo: (value: string) => void;
+
+  completedImages: (File | string)[];
+
+  handleCompletedImageChange: (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => void;
+
+  handleSave: () => void;
+
+  editingId: string | null;
+
+  error: string;
+
+  success: string;
 };
 
-function AirplaneList({ airplanes, onEdit, onDelete }: Props) {
-  if (airplanes.length === 0) {
-    return (
-      <>
-        {/* 1つ目の修正箇所（データが空のとき） */}
-        <h2 style={{ color: "white" }}>登録済み紙飛行機</h2>
+function AirplaneForm({
+  name,
+  setName,
 
-        <p>該当する紙飛行機はありません</p>
-      </>
-    );
-  }
+  distance,
+  setDistance,
+
+  foldCount,
+  setFoldCount,
+
+  createdDate,
+  setCreatedDate,
+
+  memo,
+  setMemo,
+
+  completedImages,
+  handleCompletedImageChange,
+
+  handleSave,
+
+  editingId,
+
+  error,
+
+  success,
+}: Props) {
+  // ★ スマホとPCで共通してレスポンシブ対応するためのスタイル
+  const inputStyle = {
+    backgroundColor: "#ffffff", 
+    color: "#333333",           
+    border: "1px solid #ccc",   
+    borderRadius: "4px",        
+    padding: "8px 12px",        
+    fontSize: "16px",            // iPhoneの自動ズーム防止
+
+    width: "100%",               // 基本は横幅いっぱい
+    maxWidth: "400px",           // PCでの最大幅
+    boxSizing: "border-box" as const, 
+  };
 
   return (
     <>
-      {/* 2つ目の修正箇所（データがあるとき） */}
-      <h2 style={{ color: "white" }}>登録済み紙飛行機</h2>
+      <div>
+        <label>名前（必須）</label>
+        <br />
+        <input
+          type="text"
+          value={name}
+          maxLength={100}
+          onChange={(e) => setName(e.target.value)}
+          style={inputStyle} 
+        />
+      </div>
 
-      <ul>
-        {airplanes.map((airplane) => (
-          <li key={airplane.id}>
-            <Link to={`/detail/${airplane.id}`}>
-              <strong>{airplane.name}</strong>
-            </Link>
+      <br />
 
-            <br />
+      <ImageUploader
+        completedImages={completedImages}
+        onChange={handleCompletedImageChange}
+      />
 
-            {airplane.completedImages?.length > 0 ? (
-              <img
-                src={airplane.completedImages[0]}
-                alt={airplane.name}
-                width={150}
-              />
-            ) : (
-              <div
-                style={{
-                  width: 150,
-                  height: 100,
-                  border: "1px solid gray",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                No Image
-              </div>
-            )}
+      <br />
 
-            <br />
+      <div>
+        <label>飛距離(m)</label>
+        <br />
+        <input
+          type="number"
+          step="0.1"
+          min="0.1"
+          max="9999.9"
+          value={distance}
+          onChange={(e) => setDistance(e.target.value)}
+          style={inputStyle} 
+        />
+      </div>
 
-            飛距離：{airplane.distance ?? "-"}m
-            <br />
-            折る回数：{airplane.foldCount ?? "-"}回
-            <br />
-            作成日：{airplane.createdDate ?? "-"}
-            <br />
-            備考：{airplane.memo || "-"}
-            <br />
-            登録日時：
-            {new Date(airplane.createdAt).toLocaleString()}
-            <br />
-            <button onClick={() => onEdit(airplane)}>
-              編集(クリックしたら↑に戻って！)
-            </button>
-            {" "}
-            <button onClick={() => onDelete(airplane.id)}>削除</button>
-            <hr />
-          </li>
-        ))}
-      </ul>
+      <br />
+
+      <div>
+        <label>折る回数</label>
+        <br />
+        <input
+          type="number"
+          min="0"
+          max="999"
+          value={foldCount}
+          onChange={(e) => setFoldCount(e.target.value)}
+          // 💡 width を auto に、maxWidth を none に上書きして最初のサイズ感に戻します
+          style={{
+            ...inputStyle,
+            width: "auto",
+            maxWidth: "none",
+          }}
+        />
+      </div>
+
+      <br />
+
+      <div>
+        <label>作成日</label>
+        <br />
+        <input
+          type="date"
+          value={createdDate}
+          onChange={(e) => setCreatedDate(e.target.value)}
+          // 💡 width を auto に、maxWidth を none に上書きして最初のサイズ感に戻します
+          style={{
+            ...inputStyle,
+            width: "auto",
+            maxWidth: "none",
+          }}
+        />
+      </div>
+
+      <br />
+
+      <div>
+        <label>備考メモ</label>
+        <br />
+        <textarea
+          value={memo}
+          rows={5}
+          maxLength={256}
+          onChange={(e) => setMemo(e.target.value)}
+          style={{
+            ...inputStyle,
+            maxWidth: "600px", 
+          }}
+        />
+      </div>
+
+      <br />
+
+      <button
+        onClick={handleSave}
+        style={{
+          fontSize: "20px",      
+          fontWeight: "bold",    
+          padding: "12px 24px",  
+          borderRadius: "12px",  
+          cursor: "pointer",     
+          border: "none",        
+          backgroundColor: "#4CAF50", 
+          color: "white",        
+        }}
+      >
+        {editingId ? "更新" : "保存(詳しい折り方は↓から入力！)"}
+      </button>
+
+      {error && (
+        <p style={{ color: "red" }}>
+          {error}
+        </p>
+      )}
+
+      {success && (
+        <p style={{ color: "green" }}>
+          {success}
+        </p>
+      )}
+
+      <hr />
     </>
   );
 }
 
-export default AirplaneList;
+export default AirplaneForm;
 </file>
 
 <file path="paper-airplane-app/src/pages/ListPage.tsx">
@@ -2259,7 +2185,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const BACKGROUND_IMAGE_URL = 'https://i.imgur.com/o7zyzFi.jpeg'; 
+const BACKGROUND_IMAGE_URL = 'https://i.imgur.com/ThREANs.jpeg'; 
 
 function ListPage({ children }: Props) {
   const logoText = "GLIDELOG".split("");
@@ -2344,7 +2270,126 @@ function ListPage({ children }: Props) {
 export default ListPage;
 </file>
 
+<file path="paper-airplane-app/src/components/AirplaneList.tsx">
+import type { Airplane } from "../types/airplane";
+import { Link } from "react-router-dom";
+
+type Props = {
+  airplanes: Airplane[];
+  onEdit: (airplane: Airplane) => void;
+  onDelete: (id: string) => void;
+};
+
+function AirplaneList({ airplanes, onEdit, onDelete }: Props) {
+  if (airplanes.length === 0) {
+    return (
+      <>
+        <h2 style={{ color: "white" }}>登録済み紙飛行機</h2>
+        {/* 文字が見えるように白に指定 */}
+        <p style={{ color: "white" }}>該当する紙飛行機はありません</p>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <h2 style={{ color: "white" }}>登録済み紙飛行機</h2>
+
+      {/* <ul> 全体の文字色を白(white)にして、全体の視認性を上げます */}
+      <ul style={{ color: "white" }}>
+        {airplanes.map((airplane) => (
+          <li key={airplane.id} style={{ marginBottom: "20px" }}>
+            {/* Link（aタグ）の文字色を変更。
+              textDecoration: "underline" を入れるとリンクらしさが出ます。
+            */}
+            <Link 
+              to={`/detail/${airplane.id}`} 
+              style={{ color: "#FFD700", textDecoration: "underline", fontSize: "1.5rem" }}
+            >
+              <strong>{airplane.name}</strong>
+            </Link>
+
+            <br />
+
+            {airplane.completedImages?.length > 0 ? (
+              <img
+                src={airplane.completedImages[0]}
+                alt={airplane.name}
+                width={150}
+              />
+            ) : (
+              <div
+                style={{
+                  width: 150,
+                  height: 100,
+                  border: "1px solid gray",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                No Image
+              </div>
+            )}
+
+            <br />
+
+            飛距離：{airplane.distance ?? "-"}m
+            <br />
+            折る回数：{airplane.foldCount ?? "-"}回
+            <br />
+            作成日：{airplane.createdDate ?? "-"}
+            <br />
+            備考：{airplane.memo || "-"}
+            <br />
+            登録日時：
+            {new Date(airplane.createdAt).toLocaleString()}
+            <br />
+            <button
+  onClick={() => onEdit(airplane)}
+  style={{
+    fontSize: "18px",         // 文字を大きく
+    fontWeight: "bold",       // 太字
+    padding: "10px 20px",     // クリック範囲を広く
+    borderRadius: "12px",     // 角を丸く
+    border: "none",
+    cursor: "pointer",
+    backgroundColor: "#2196F3", // 青色
+    color: "white",
+    marginRight: "10px",      // 削除ボタンとの間隔
+  }}
+>
+  編集(クリックしたら↑に戻って！)
+</button>
+
+<button
+  onClick={() => onDelete(airplane.id)}
+  style={{
+    fontSize: "18px",
+    fontWeight: "bold",
+    padding: "10px 20px",
+    borderRadius: "12px",
+    border: "none",
+    cursor: "pointer",
+    backgroundColor: "#f44336", // 赤色
+    color: "white",
+  }}
+>
+  削除
+</button>
+            <hr style={{ borderColor: "#444" }} />
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+}
+
+export default AirplaneList;
+</file>
+
 <file path="paper-airplane-app/src/App.tsx">
+//App.tsx
 import { useState } from "react";
 import { resizeImage } from "./utils/image";
 import { fileToBase64 } from "./utils/file";
@@ -2609,6 +2654,187 @@ function App() {
 }
 
 export default App;
+</file>
+
+<file path="README.md">
+# 起動方法　https://csta24035.github.io/paper-airplane-app/
+# paper-airplane-app
+## 要件定義
+### 目的
+#### 個人で様々な​紙飛行機の​折り方を​個々で​記録・​保存し、​飛距離と​セットで​閲覧できるWebアプリ
+
+
+### 利用者の入出力
+#### 入力  
+「紙飛行機の名前」(必須)文字入力数1～100文字  
+「完成した紙飛行機の画像」(任意)1枚当たり10MBまでの容量制限  
+「折り方（テキスト）」(任意)入力範囲0～5000文字  
+「折り方（画像）」(任意)1枚当たり10MBまでの容量制限  
+「折る回数」(任意)入力範囲は整数で0回～999回  
+「飛距離」(任意)入力範囲0.1m～9999.9m  
+「作成日」(任意)手入力で都度更新可  
+「備考メモ」(任意)改行可
+#### 出力  
+名前  
+完成した紙飛行機の画像（先頭画像のみ、画像無しならプレースホルダー表示）    
+飛距離  
+折る回数  
+作成日  
+折り方  
+備考メモ
+上記を紙飛行機ごとにまとめてセットで閲覧できるように表示 
+
+
+### 制約  
+Webアプリのみ  
+データは端末内のブラウザストレージに保存  
+実装方式はIndexedDBを利用  
+データはサーバーへ送信しない  
+利用可能な端末はスマートフォン・タブレット・PC  
+紙飛行機の名前は重複可  
+飛距離はm（メートル）単位で小数点入力も可  
+折る回数は手入力  
+作成日は任意の日付を指定  
+備考メモの文字数制限は256文字まで  
+完成画像は3枚まで登録可能  
+折り方画像は50枚まで登録可能  
+折り方画像と折り方テキストは両方必須ではない  
+データ件数は1つの端末に最大100件  
+IndexedDB容量超過時には保存失敗時はエラーメッセージ表示  
+ブラウザデータ削除時はデータも消失し復旧機能は提供しない  
+最大件数到達時は100件で、最大まで登録済みの場合には新規登録を禁止してエラーメッセージ表示  
+画像枚数超過時は完成画像4枚目以降は選択不可  
+折り方画像51枚目以降は登録不可 
+
+
+### 受け入れ基準
+紙飛行機の登録が可能  
+一覧表示が可能  
+データが再起動後も残る  
+画像付きでの閲覧が可能  
+折り方を手順ごとに管理（手順1：説明テキスト・画像　手順2：説明テキスト・画像）  
+一覧画面では名前・完成画像 ・飛距離・折る回数・作成日を表示。  
+一覧から詳細画面へ遷移する形式  
+詳細画面の表示順は名前・完成画像・飛距離・折る回数・作成日・折り方・備考メモ  
+ソートは昇順・降順の両方必要  
+飛距離順・折る回数順・作成日順・名前順でソート可能  
+検索機能（名前検索）  
+登録後の紙飛行機情報を編集可能  
+削除機能  
+削除時に確認ダイアログを表示  
+アップロード可能な画像形式はJPGとPNG  
+画像サイズに上限が無いため画像の自動リサイズや圧縮（長辺1920px以内・JPEG品質80%・PNGはリサイズのみ）が必要  
+対応ブラウザはSafari・Chrome・Edge・Brave  
+同時利用者は1人  
+必須項目のみで登録可能  
+最大件数100件まで登録可能  
+登録後一覧に反映  
+全項目を編集可能  
+編集内容は永続  
+昇順・降順を切り替え可能  
+同値の場合は登録順を維持  
+部分一致検索  
+大文字小文字を区別しない  
+0件時にメッセージ表示  
+ブラウザ再起動後もデータが保持される。端末再起動後も保持される。 
+
+
+### 非目標
+ユーザー登録  
+AIによる折り方提案  
+クラウド同期  
+複数ユーザー管理  
+他端末との同期は対象外  
+QR共有は対象外
+
+## 4種の設計図
+### ユースケース図風
+![alt text](image.png)
+図の構成要素と意図の解説
+1. アクター
+ユーザー（個人）: 「同時利用者は1人」「ユーザー登録や複数ユーザー管理は非目標」という要件から、アプリを操作する単一の主体として定義しています。
+
+2. 主要なユースケース（起点）
+紙飛行機を登録する: 新規作成のフローです。
+
+一覧を表示する: アプリ起動時の基本画面となるフローです。
+
+3. 関係性（include / extend）の定義
+<< include >>（必須で実行される処理）
+
+登録 ➔ 画像圧縮・件数チェック: 登録処理を行う際、要件にある「最大100件の制約」や「画像の自動リサイズ・圧縮」はバックグラウンドで必ず実行されるため包含関係としています。
+
+一覧表示 ➔ 詳細表示: 一覧から詳細画面へ遷移する形式であるため、詳細の閲覧は一覧表示のフローに包含されます。
+
+削除 ➔ 確認ダイアログ: 「削除時に確認ダイアログを表示」という受け入れ基準を満たすため、必ず発生する手順としています。
+
+<< extend >>（任意のタイミング・条件で実行される処理）
+
+一覧表示 ➔ ソート / 検索 / 削除: 一覧画面において、ユーザーの任意でソート（飛距離順など）や検索が行われます。また、一覧画面から直接削除アクションが行える設計も想定し、拡張関係で繋いでいます。
+
+詳細表示 ➔ 編集 / 削除: 詳細画面を閲覧した上で、任意で内容を更新（編集）したり、削除したりするアクションを定義しています
+
+### クラス図
+![alt text](image-1.png)
+図の設計意図とポイント解説
+1. クラス設計
+PaperAirplane (紙飛行機): アプリケーションのコアとなるエンティティです。入力要件に合わせた属性（名前、飛距離、作成日など）とデータ型を定義しています。
+
+FoldingStep (折り方手順): 「折り方を手順ごとに管理」という要件を満たすため、紙飛行機本体から切り離して独立したクラスにしています。
+
+ImageBase (画像抽象クラス) と継承: 「完成画像」と「折り方手順画像」は共通のプロパティ（データ本体、フォーマットなど）を持つため、親クラスである ImageBase を定義し、CompletedImage と StepImage がそれを継承する設計にしました。
+
+IndexedDBManager: ブラウザストレージの操作をカプセル化したクラスです。検索、ソート、最大100件の容量チェックなどの操作（メソッド）を持ちます。
+
+ImageProcessor: 長辺1920pxへのリサイズやJPEG品質80%への圧縮など、画像処理の要件を担うユーティリティクラスです。
+
+2. クラス間の関連と多重度
+コンポジション（黒いひし形 *--）: 親が削除されたら子も削除される「強い結びつき」です。紙飛行機が削除されれば完成画像や折り方手順も不要になるため、この関係を使用しています。多重度を用いて「完成画像は0～3枚まで（"0..3"）」「手順は0～50まで（"0..50"）」「各手順には画像が0～1枚（"0..1"）」という制約を明示しました。
+
+集約（白いひし形 o--）: IndexedDBの管理クラスが複数の紙飛行機データ（0～100件）を保持している関係を表しています。
+
+依存（点線矢印 ..>）: データ保存前に画像を圧縮するため、データベース管理クラスが画像処理クラスを利用（依存）していることを表しています。
+
+### シーケンス図
+紙飛行機の登録フロー
+![alt text](image-2.png)
+
+紙飛行機の削除フロー
+![alt text](image-3.png)
+
+図のポイント解説  
+4層アーキテクチャの分離
+
+画面(UI): ユーザーとの直接的なやり取り（入力の受け付け、ダイアログ表示、画面遷移）を担当します。
+
+コントローラ: ビジネスロジック（上限チェックの判断、画像のリサイズ・圧縮の実行）を担当し、UIとDBの橋渡しをします。
+
+モデル(IndexedDB): 実際のデータの永続化や、現在の登録件数のカウントなど、データの直接的な操作を担当します。
+
+loop（繰り返し）: 登録フローにて、ユーザーが添付した画像の枚数分だけ（完成画像最大3枚＋手順画像最大50枚）、画像の最適化処理を繰り返す構造にしています。
+
+alt（条件分岐）: 登録フローでは「登録件数が100件に達しているかどうか」、削除フローでは「確認ダイアログでユーザーがどちらを選択したか」による処理の分岐を明確にしています。
+
+### 状態遷移図
+![alt text](image-4.png)
+図の設計意図とポイント解説
+1. 状態の定義
+[*]（初期状態 / 終了状態）: 黒い丸で表現されるシステム外の状態です。データが存在しない状態から始まり、最終的に削除されてシステムから消滅するまでのライフサイクルを示します。
+
+未保存（入力中）: ユーザーが新規フォームに名前や画像をセットしている段階です。この時点ではまだブラウザのストレージ（IndexedDB）には保存されていません。
+
+保存処理中: 登録や更新がリクエストされ、システムがバックグラウンドで「画像の自動圧縮（リサイズ等）」や「最大100件の制約チェック」を行っている過渡的な状態です。
+
+登録済み（保持状態）: IndexedDBにデータが正常に保存され、安定している状態です。この状態のまま、一覧表示、詳細表示、ソート、検索などの操作が行われます。
+
+編集中 / 削除確認中: 既存データに対してユーザーが変更を加えようとしている、あるいは削除の最終確認を行っている状態です。
+
+2. トリガー（イベント）と遷移の制御
+保存失敗のループ: 要件にある「最大件数100件」「容量超過時はエラーメッセージ表示」という制約を表現するため、保存処理中 から 未保存 に戻る遷移（保存失敗のフォールバック）を明示しています。
+
+編集から保存への共通化: 新規作成時だけでなく、編集中に更新をリクエストした際も同様に 保存処理中 ステートを経由させることで、画像圧縮や容量チェックの処理が共通して走る設計意図を反映しています。
+
+キャンセルの担保: ユーザーの誤操作を防ぐため、入力中や編集中、削除確認の各状態から「キャンセル」をトリガーにして安全な状態へ戻る、もしくは破棄される遷移を設けています。
 </file>
 
 </files>
