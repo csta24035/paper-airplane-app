@@ -1,4 +1,5 @@
-# https://csta24035.github.io/paper-airplane-app/
+
+# 起動方法　https://csta24035.github.io/paper-airplane-app/
 # paper-airplane-app
 ## 要件定義
 ### 目的
