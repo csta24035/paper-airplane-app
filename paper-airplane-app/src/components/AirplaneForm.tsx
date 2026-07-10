@@ -183,17 +183,32 @@ function AirplaneForm({
       </button>
 
       {error && (
-        <p style={{ color: "red" }}>
-          {error}
+        <p style={{ 
+          color: "white", 
+          backgroundColor: "#d32f2f", /* エラー用の赤背景 */
+          padding: "8px 16px", 
+          borderRadius: "8px",
+          display: "inline-block",
+          fontWeight: "bold"
+        }}>
+          ⚠️ {error}
         </p>
       )}
 
       {success && (
-        <p style={{ color: "green" }}>
-          {success}
+        <p style={{ 
+          color: "white", 
+          backgroundColor: "#388e3c", /* 成功用の緑背景 */
+          padding: "8px 16px", 
+          borderRadius: "8px",
+          display: "inline-block",
+          fontWeight: "bold"
+        }}>
+          ✅ {success}
         </p>
       )}
 
+      {/* ↓この3行を追加して閉じてください！ */}
       <hr />
     </>
   );
