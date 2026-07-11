@@ -1,5 +1,6 @@
 
-# 起動方法　https://csta24035.github.io/paper-airplane-app/
+## 起動方法　https://csta24035.github.io/paper-airplane-app/
+## 紹介動画 https://youtu.be/mHP6NbPjvm0
 # paper-airplane-app
 ## 要件定義
 ### 目的
@@ -133,7 +134,7 @@ alt（条件分岐）：登録フローでは「登録件数が100件に達し�
 ### 状態遷移図
 ![alt text](image-9.png)
 #### 図のポイント解説  
-初期状態 ([*]) と終了状態 ([*])：初期状態から新規作成を開始することで、データの入力状態（Drafting）へ遷移します。  
+初期状態 ([ ]) と終了状態 ([ ])：初期状態から新規作成を開始することで、データの入力状態（Drafting）へ遷移します。  
 削除確認ダイアログで「OK」を選択し、indexedDb からデータが完全に削除された時点が終了状態（ライフサイクルの終わり）となります。  
 
 Drafting（入力・編集状態）：AirplaneForm 上での状態です。基本情報の入力（EnteringData）を中心に、画像の添付（ImageUploader）や手順の追加（InstructionEditor）を行き来する内部状態を持たせています。  
