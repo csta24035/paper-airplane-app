@@ -1,5 +1,5 @@
 
-## 起動方法　https://csta24035.github.io/paper-airplane-app/
+## 起動方法  https://csta24035.github.io/paper-airplane-app/
 ## 紹介動画  https://youtu.be/mHP6NbPjvm0
 # paper-airplane-app
 ## 要件定義
