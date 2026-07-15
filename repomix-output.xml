@@ -40,136 +40,70 @@ The content is organized as follows:
 </file_summary>
 
 <directory_structure>
+paper-airplane-app/
+  public/
+    favicon.svg
+    icons.svg
+  src/
+    assets/
+      hero.png
+      react.svg
+      vite.svg
+    components/
+      AirplaneForm.tsx
+      AirplaneList.tsx
+      ImageUploader.tsx
+      InstructionEditor.tsx
+      SearchSort.tsx
+    db/
+      indexedDb.ts
+    hooks/
+      useAirplanes.ts
+      useEditAirplane.ts
+      useFilteredAirplanes.ts
+      useImageUploader.ts
+      useInstructions.ts
+      useSaveAirplane.ts
+    pages/
+      DetailPage.tsx
+      ListPage.tsx
+    types/
+      airplane.ts
+      form.ts
+    utils/
+      file.ts
+      image.ts
+      validation.ts
+    App.css
+    App.tsx
+    index.css
+    main.tsx
+  .gitignore
+  eslint.config.js
+  index.html
+  package.json
+  README.md
+  tsconfig.app.json
+  tsconfig.json
+  tsconfig.node.json
+  vite.config.ts
 .gitattributes
 image-1.png
 image-2.png
 image-3.png
 image-4.png
+image-5.png
+image-6.png
+image-7.png
+image-8.png
+image-9.png
 image.png
 package.json
-paper-airplane-app/.gitignore
-paper-airplane-app/eslint.config.js
-paper-airplane-app/index.html
-paper-airplane-app/package.json
-paper-airplane-app/public/favicon.svg
-paper-airplane-app/public/icons.svg
-paper-airplane-app/README.md
-paper-airplane-app/src/App.css
-paper-airplane-app/src/App.tsx
-paper-airplane-app/src/assets/hero.png
-paper-airplane-app/src/assets/react.svg
-paper-airplane-app/src/assets/vite.svg
-paper-airplane-app/src/components/AirplaneForm.tsx
-paper-airplane-app/src/components/AirplaneList.tsx
-paper-airplane-app/src/components/ImageUploader.tsx
-paper-airplane-app/src/components/InstructionEditor.tsx
-paper-airplane-app/src/components/SearchSort.tsx
-paper-airplane-app/src/db/indexedDb.ts
-paper-airplane-app/src/hooks/useAirplanes.ts
-paper-airplane-app/src/hooks/useEditAirplane.ts
-paper-airplane-app/src/hooks/useFilteredAirplanes.ts
-paper-airplane-app/src/hooks/useImageUploader.ts
-paper-airplane-app/src/hooks/useInstructions.ts
-paper-airplane-app/src/hooks/useSaveAirplane.ts
-paper-airplane-app/src/index.css
-paper-airplane-app/src/main.tsx
-paper-airplane-app/src/pages/DetailPage.tsx
-paper-airplane-app/src/pages/ListPage.tsx
-paper-airplane-app/src/types/airplane.ts
-paper-airplane-app/src/types/form.ts
-paper-airplane-app/src/utils/file.ts
-paper-airplane-app/src/utils/image.ts
-paper-airplane-app/src/utils/validation.ts
-paper-airplane-app/tsconfig.app.json
-paper-airplane-app/tsconfig.json
-paper-airplane-app/tsconfig.node.json
-paper-airplane-app/vite.config.ts
 README.md
 </directory_structure>
 
 <files>
 This section contains the contents of the repository's files.
-
-<file path=".gitattributes">
-# Auto detect text files and perform LF normalization
-* text=auto
-</file>
-
-<file path="package.json">
-{
-  "dependencies": {
-    "idb": "^8.0.3"
-  }
-}
-</file>
-
-<file path="paper-airplane-app/.gitignore">
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-</file>
-
-<file path="paper-airplane-app/eslint.config.js">
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import tseslint from 'typescript-eslint'
-import { defineConfig, globalIgnores } from 'eslint/config'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      js.configs.recommended,
-      tseslint.configs.recommended,
-      reactHooks.configs.flat.recommended,
-      reactRefresh.configs.vite,
-    ],
-    languageOptions: {
-      globals: globals.browser,
-    },
-  },
-])
-</file>
-
-<file path="paper-airplane-app/index.html">
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>paper-airplane-app</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
-</file>
 
 <file path="paper-airplane-app/public/favicon.svg">
 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="46" fill="none" viewBox="0 0 48 46"><path fill="#863bff" d="M25.946 44.938c-.664.845-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.287c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.497 0-3.578-1.842-3.578H1.237c-.92 0-1.456-1.04-.92-1.788L10.013.474c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.579 1.842 3.579h11.377c.943 0 1.473 1.088.89 1.83L25.947 44.94z" style="fill:#863bff;fill:color(display-p3 .5252 .23 1);fill-opacity:1"/><mask id="a" width="48" height="46" x="0" y="0" maskUnits="userSpaceOnUse" style="mask-type:alpha"><path fill="#000" d="M25.842 44.938c-.664.844-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.183c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.498 0-3.579-1.842-3.579H1.133c-.92 0-1.456-1.04-.92-1.787L9.91.473c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.578 1.842 3.578h11.377c.943 0 1.473 1.088.89 1.832L25.843 44.94z" style="fill:#000;fill-opacity:1"/></mask><g mask="url(#a)"><g filter="url(#b)"><ellipse cx="5.508" cy="14.704" fill="#ede6ff" rx="5.508" ry="14.704" style="fill:#ede6ff;fill:color(display-p3 .9275 .9033 1);fill-opacity:1" transform="matrix(.00324 1 1 -.00324 -4.47 31.516)"/></g><g filter="url(#c)"><ellipse cx="10.399" cy="29.851" fill="#ede6ff" rx="10.399" ry="29.851" style="fill:#ede6ff;fill:color(display-p3 .9275 .9033 1);fill-opacity:1" transform="matrix(.00324 1 1 -.00324 -39.328 7.883)"/></g><g filter="url(#d)"><ellipse cx="5.508" cy="30.487" fill="#7e14ff" rx="5.508" ry="30.487" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.814 -25.913 -14.639)scale(1 -1)"/></g><g filter="url(#e)"><ellipse cx="5.508" cy="30.599" fill="#7e14ff" rx="5.508" ry="30.599" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.814 -32.644 -3.334)scale(1 -1)"/></g><g filter="url(#f)"><ellipse cx="5.508" cy="30.599" fill="#7e14ff" rx="5.508" ry="30.599" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="matrix(.00324 1 1 -.00324 -34.34 30.47)"/></g><g filter="url(#g)"><ellipse cx="14.072" cy="22.078" fill="#ede6ff" rx="14.072" ry="22.078" style="fill:#ede6ff;fill:color(display-p3 .9275 .9033 1);fill-opacity:1" transform="rotate(93.35 24.506 48.493)scale(-1 1)"/></g><g filter="url(#h)"><ellipse cx="3.47" cy="21.501" fill="#7e14ff" rx="3.47" ry="21.501" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.009 28.708 47.59)scale(-1 1)"/></g><g filter="url(#i)"><ellipse cx="3.47" cy="21.501" fill="#7e14ff" rx="3.47" ry="21.501" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.009 28.708 47.59)scale(-1 1)"/></g><g filter="url(#j)"><ellipse cx=".387" cy="8.972" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(39.51 .387 8.972)"/></g><g filter="url(#k)"><ellipse cx="47.523" cy="-6.092" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 47.523 -6.092)"/></g><g filter="url(#l)"><ellipse cx="41.412" cy="6.333" fill="#47bfff" rx="5.971" ry="9.665" style="fill:#47bfff;fill:color(display-p3 .2799 .748 1);fill-opacity:1" transform="rotate(37.892 41.412 6.333)"/></g><g filter="url(#m)"><ellipse cx="-1.879" cy="38.332" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 -1.88 38.332)"/></g><g filter="url(#n)"><ellipse cx="-1.879" cy="38.332" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 -1.88 38.332)"/></g><g filter="url(#o)"><ellipse cx="35.651" cy="29.907" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 35.651 29.907)"/></g><g filter="url(#p)"><ellipse cx="38.418" cy="32.4" fill="#47bfff" rx="5.971" ry="15.297" style="fill:#47bfff;fill:color(display-p3 .2799 .748 1);fill-opacity:1" transform="rotate(37.892 38.418 32.4)"/></g></g><defs><filter id="b" width="60.045" height="41.654" x="-19.77" y="16.149" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="7.659"/></filter><filter id="c" width="90.34" height="51.437" x="-54.613" y="-7.533" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="7.659"/></filter><filter id="d" width="79.355" height="29.4" x="-49.64" y="2.03" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="e" width="79.579" height="29.4" x="-45.045" y="20.029" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="f" width="79.579" height="29.4" x="-43.513" y="21.178" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="g" width="74.749" height="58.852" x="15.756" y="-17.901" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="7.659"/></filter><filter id="h" width="61.377" height="25.362" x="23.548" y="2.284" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="i" width="61.377" height="25.362" x="23.548" y="2.284" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="j" width="56.045" height="63.649" x="-27.636" y="-22.853" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="k" width="54.814" height="64.646" x="20.116" y="-38.415" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="l" width="33.541" height="35.313" x="24.641" y="-11.323" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="m" width="54.814" height="64.646" x="-29.286" y="6.009" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="n" width="54.814" height="64.646" x="-29.286" y="6.009" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="o" width="54.814" height="64.646" x="8.244" y="-2.416" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="p" width="39.409" height="43.623" x="18.713" y="10.588" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter></defs></svg>
@@ -200,271 +134,6 @@ export default defineConfig([
     <path fill="#08060d" fill-rule="evenodd" d="M1.893 1.98c.052.072 1.245 1.769 2.653 3.77l2.892 4.114c.183.261.333.48.333.486s-.068.089-.152.183l-.522.593-.765.867-3.597 4.087c-.375.426-.734.834-.798.905a1 1 0 0 0-.118.148c0 .01.236.017.664.017h.663l.729-.83c.4-.457.796-.906.879-.999a692 692 0 0 0 1.794-2.038c.034-.037.301-.34.594-.675l.551-.624.345-.392a7 7 0 0 1 .34-.374c.006 0 .93 1.306 2.052 2.903l2.084 2.965.045.063h2.275c1.87 0 2.273-.003 2.266-.021-.008-.02-1.098-1.572-3.894-5.547-2.013-2.862-2.28-3.246-2.273-3.266.008-.019.282-.332 2.085-2.38l2-2.274 1.567-1.782c.022-.028-.016-.03-.65-.03h-.674l-.3.342a871 871 0 0 1-1.782 2.025c-.067.075-.405.458-.75.852a100 100 0 0 1-.803.91c-.148.172-.299.344-.99 1.127-.304.343-.32.358-.345.327-.015-.019-.904-1.282-1.976-2.808L6.365 1.85H1.8zm1.782.91 8.078 11.294c.772 1.08 1.413 1.973 1.425 1.984.016.017.241.02 1.05.017l1.03-.004-2.694-3.766L7.796 5.75 5.722 2.852l-1.039-.004-1.039-.004z" clip-rule="evenodd"/>
   </symbol>
 </svg>
-</file>
-
-<file path="paper-airplane-app/README.md">
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
-</file>
-
-<file path="paper-airplane-app/src/App.css">
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
-
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-}
-
-.hero {
-  position: relative;
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
-}
-
-#center {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
-
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
-}
-
-#next-steps {
-  display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
-}
-
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-}
-
-#next-steps ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  gap: 8px;
-  margin: 32px 0 0;
-
-  .logo {
-    height: 18px;
-  }
-
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-  }
-}
-
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
-}
-
-.ticks {
-  position: relative;
-  width: 100%;
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
-  }
-
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
-  }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
-  }
-}
 </file>
 
 <file path="paper-airplane-app/src/assets/react.svg">
@@ -647,19 +316,6 @@ export function useInstructions() {
     setInstructions,
   };
 }
-</file>
-
-<file path="paper-airplane-app/src/main.tsx">
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
-
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
 </file>
 
 <file path="paper-airplane-app/src/types/form.ts">
@@ -871,6 +527,352 @@ export function validateMemo(
 }
 </file>
 
+<file path="paper-airplane-app/src/App.css">
+.counter {
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: var(--accent);
+  background: var(--accent-bg);
+  border: 2px solid transparent;
+  transition: border-color 0.3s;
+  margin-bottom: 24px;
+
+  &:hover {
+    border-color: var(--accent-border);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+.hero {
+  position: relative;
+
+  .base,
+  .framework,
+  .vite {
+    inset-inline: 0;
+    margin: 0 auto;
+  }
+
+  .base {
+    width: 170px;
+    position: relative;
+    z-index: 0;
+  }
+
+  .framework,
+  .vite {
+    position: absolute;
+  }
+
+  .framework {
+    z-index: 1;
+    top: 34px;
+    height: 28px;
+    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
+      scale(1.4);
+  }
+
+  .vite {
+    z-index: 0;
+    top: 107px;
+    height: 26px;
+    width: auto;
+    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
+      scale(0.8);
+  }
+}
+
+#center {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  place-content: center;
+  place-items: center;
+  flex-grow: 1;
+
+  @media (max-width: 1024px) {
+    padding: 32px 20px 24px;
+    gap: 18px;
+  }
+}
+
+#next-steps {
+  display: flex;
+  border-top: 1px solid var(--border);
+  text-align: left;
+
+  & > div {
+    flex: 1 1 0;
+    padding: 32px;
+    @media (max-width: 1024px) {
+      padding: 24px 20px;
+    }
+  }
+
+  .icon {
+    margin-bottom: 16px;
+    width: 22px;
+    height: 22px;
+  }
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+#docs {
+  border-right: 1px solid var(--border);
+
+  @media (max-width: 1024px) {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+#next-steps ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 8px;
+  margin: 32px 0 0;
+
+  .logo {
+    height: 18px;
+  }
+
+  a {
+    color: var(--text-h);
+    font-size: 16px;
+    border-radius: 6px;
+    background: var(--social-bg);
+    display: flex;
+    padding: 6px 12px;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: box-shadow 0.3s;
+
+    &:hover {
+      box-shadow: var(--shadow);
+    }
+    .button-icon {
+      height: 18px;
+      width: 18px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    margin-top: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    li {
+      flex: 1 1 calc(50% - 8px);
+    }
+
+    a {
+      width: 100%;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+  }
+}
+
+#spacer {
+  height: 88px;
+  border-top: 1px solid var(--border);
+  @media (max-width: 1024px) {
+    height: 48px;
+  }
+}
+
+.ticks {
+  position: relative;
+  width: 100%;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: -4.5px;
+    border: 5px solid transparent;
+  }
+
+  &::before {
+    left: 0;
+    border-left-color: var(--border);
+  }
+  &::after {
+    right: 0;
+    border-right-color: var(--border);
+  }
+}
+</file>
+
+<file path="paper-airplane-app/src/main.tsx">
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.tsx'
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+)
+</file>
+
+<file path="paper-airplane-app/.gitignore">
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+</file>
+
+<file path="paper-airplane-app/eslint.config.js">
+import js from '@eslint/js'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+import tseslint from 'typescript-eslint'
+import { defineConfig, globalIgnores } from 'eslint/config'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      js.configs.recommended,
+      tseslint.configs.recommended,
+      reactHooks.configs.flat.recommended,
+      reactRefresh.configs.vite,
+    ],
+    languageOptions: {
+      globals: globals.browser,
+    },
+  },
+])
+</file>
+
+<file path="paper-airplane-app/index.html">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>paper-airplane-app</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+</file>
+
+<file path="paper-airplane-app/README.md">
+# React + TypeScript + Vite
+
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+
+## React Compiler
+
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
+
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+
+```
+
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+
+```
+</file>
+
 <file path="paper-airplane-app/tsconfig.app.json">
 {
   "compilerOptions": {
@@ -932,6 +934,19 @@ export function validateMemo(
     "noFallthroughCasesInSwitch": true
   },
   "include": ["vite.config.ts"]
+}
+</file>
+
+<file path=".gitattributes">
+# Auto detect text files and perform LF normalization
+* text=auto
+</file>
+
+<file path="package.json">
+{
+  "dependencies": {
+    "idb": "^8.0.3"
+  }
 }
 </file>
 
@@ -1311,43 +1326,6 @@ code {
 }
 </file>
 
-<file path="paper-airplane-app/package.json">
-{
-  "name": "paper-airplane-app",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
-  },
-  "dependencies": {
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7",
-    "react-router-dom": "^7.18.0"
-  },
-  "devDependencies": {
-    "@eslint/js": "^10.0.1",
-    "@types/node": "^24.13.2",
-    "@types/react": "^19.2.17",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^6.0.2",
-    "eslint": "^10.5.0",
-    "eslint-plugin-react-hooks": "^7.1.1",
-    "eslint-plugin-react-refresh": "^0.5.3",
-    "gh-pages": "^6.3.0",
-    "globals": "^17.6.0",
-    "typescript": "~6.0.2",
-    "typescript-eslint": "^8.61.0",
-    "vite": "^8.1.0"
-  }
-}
-</file>
-
 <file path="paper-airplane-app/src/hooks/useSaveAirplane.ts">
 // useSaveAirplane.ts
 import {
@@ -1688,6 +1666,43 @@ airplanes.find(
 }
 
 export default DetailPage;
+</file>
+
+<file path="paper-airplane-app/package.json">
+{
+  "name": "paper-airplane-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "dependencies": {
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "react-router-dom": "^7.18.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.13.2",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.2",
+    "eslint": "^10.5.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.3",
+    "gh-pages": "^6.3.0",
+    "globals": "^17.6.0",
+    "typescript": "~6.0.2",
+    "typescript-eslint": "^8.61.0",
+    "vite": "^8.1.0"
+  }
+}
 </file>
 
 <file path="paper-airplane-app/vite.config.ts">
@@ -2672,7 +2687,8 @@ export default App;
 </file>
 
 <file path="README.md">
-# 起動方法　https://csta24035.github.io/paper-airplane-app/
+## 起動方法  https://csta24035.github.io/paper-airplane-app/
+## 紹介動画  https://youtu.be/mHP6NbPjvm0
 # paper-airplane-app
 ## 要件定義
 ### 目的
@@ -2764,92 +2780,88 @@ QR共有は対象外
 
 ## 4種の設計図
 ### ユースケース図風
-![alt text](image.png)
-図の構成要素と意図の解説
-1. アクター
-ユーザー（個人）: 「同時利用者は1人」「ユーザー登録や複数ユーザー管理は非目標」という要件から、アプリを操作する単一の主体として定義しています。
+![alt text](image-6.png)
+#### 図のポイント解説  
+アクター: システムを利用する「利用者（User）」を定義し、主要なユースケースに実線（---）で繋いでいます。同時利用者は1人という要件に基づき、アクターは1種類のみです。  
 
-2. 主要なユースケース（起点）
-紙飛行機を登録する: 新規作成のフローです。
+<< include >> (包含関係)：登録（AirplaneForm）や編集時には、要件にある「画像の自動リサイズ・圧縮（ImageUploader）」や「手順の管理（InstructionEditor）」が必須プロセスとして組み込まれるため、include で繋いでいます。  
+削除実行時の「確認ダイアログ表示」も要件として必須のため include としています。
+全てのデータ操作（登録、表示、編集、削除）は、IndexedDB（indexedDb）を介して行われるため、データ永続化処理を包含しています。  
 
-一覧を表示する: アプリ起動時の基本画面となるフローです。
-
-3. 関係性（include / extend）の定義
-<< include >>（必須で実行される処理）
-
-登録 ➔ 画像圧縮・件数チェック: 登録処理を行う際、要件にある「最大100件の制約」や「画像の自動リサイズ・圧縮」はバックグラウンドで必ず実行されるため包含関係としています。
-
-一覧表示 ➔ 詳細表示: 一覧から詳細画面へ遷移する形式であるため、詳細の閲覧は一覧表示のフローに包含されます。
-
-削除 ➔ 確認ダイアログ: 「削除時に確認ダイアログを表示」という受け入れ基準を満たすため、必ず発生する手順としています。
-
-<< extend >>（任意のタイミング・条件で実行される処理）
-
-一覧表示 ➔ ソート / 検索 / 削除: 一覧画面において、ユーザーの任意でソート（飛距離順など）や検索が行われます。また、一覧画面から直接削除アクションが行える設計も想定し、拡張関係で繋いでいます。
-
-詳細表示 ➔ 編集 / 削除: 詳細画面を閲覧した上で、任意で内容を更新（編集）したり、削除したりするアクションを定義しています
+<< extend >> (拡張関係)：「100件到達時」や「IndexedDB容量超過時」という特定の条件を満たした場合のみエラーメッセージの表示が行われるため、登録処理からの extend（拡張）として表現しています。  
 
 ### クラス図
-![alt text](image-1.png)
-図の設計意図とポイント解説
-1. クラス設計
-PaperAirplane (紙飛行機): アプリケーションのコアとなるエンティティです。入力要件に合わせた属性（名前、飛距離、作成日など）とデータ型を定義しています。
+![alt text](image-5.png)
+#### クラス図のポイント  
+データモデルの分離：要件で規定されているデータ（名前、完成画像最大3枚、飛距離、折る回数、作成日、備考メモ）を Airplane クラスに定義し、0〜50個作成される手順を Instruction クラスに切り出しました。これらは コンポジション（黒いひし形 *--）で結びつけています。  
+多重度の明記：Airplane と Instruction の間には "1" *-- "0..50"（1つの紙飛行機に対して折り方は最大50件）を定義。  
+indexedDb と Airplane の間には "1" o-- "0..100"（DB内に保存できる紙飛行機データは最大100件）を定義し、集約（白いひし形 o--）を用いています。  
 
-FoldingStep (折り方手順): 「折り方を手順ごとに管理」という要件を満たすため、紙飛行機本体から切り離して独立したクラスにしています。
-
-ImageBase (画像抽象クラス) と継承: 「完成画像」と「折り方手順画像」は共通のプロパティ（データ本体、フォーマットなど）を持つため、親クラスである ImageBase を定義し、CompletedImage と StepImage がそれを継承する設計にしました。
-
-IndexedDBManager: ブラウザストレージの操作をカプセル化したクラスです。検索、ソート、最大100件の容量チェックなどの操作（メソッド）を持ちます。
-
-ImageProcessor: 長辺1920pxへのリサイズやJPEG品質80%への圧縮など、画像処理の要件を担うユーティリティクラスです。
-
-2. クラス間の関連と多重度
-コンポジション（黒いひし形 *--）: 親が削除されたら子も削除される「強い結びつき」です。紙飛行機が削除されれば完成画像や折り方手順も不要になるため、この関係を使用しています。多重度を用いて「完成画像は0～3枚まで（"0..3"）」「手順は0～50まで（"0..50"）」「各手順には画像が0～1枚（"0..1"）」という制約を明示しました。
-
-集約（白いひし形 o--）: IndexedDBの管理クラスが複数の紙飛行機データ（0～100件）を保持している関係を表しています。
-
-依存（点線矢印 ..>）: データ保存前に画像を圧縮するため、データベース管理クラスが画像処理クラスを利用（依存）していることを表しています。
+UIとロジックの依存関係：ListPage や AirplaneForm 等のUIコンポーネントが、それぞれ子コンポーネント（SearchSort や ImageUploader など）を内包する形で表現しています。画像自動リサイズと圧縮の要件は ImageUploader の操作として定義しました。  
 
 ### シーケンス図
 紙飛行機の登録フロー
-![alt text](image-2.png)
-
+![alt text](image-7.png)
+  
+  
 紙飛行機の削除フロー
-![alt text](image-3.png)
+![alt text](image-8.png)
+  
+#### 図のポイント解説  
+4層アーキテクチャの分離：画面(UI): AirplaneForm や DetailPage など、ユーザー入力を受け付け、表示を担当。  
 
-図のポイント解説  
-4層アーキテクチャの分離
+コントローラ：上限件数の判定や、ImageUploader に相当する画像処理ロジックなど、ビジネスルールを担当。  
 
-画面(UI): ユーザーとの直接的なやり取り（入力の受け付け、ダイアログ表示、画面遷移）を担当します。
+モデル(DB)：indexedDb を介した実際のデータの読み書き、永続化を担当。  
 
-コントローラ: ビジネスロジック（上限チェックの判断、画像のリサイズ・圧縮の実行）を担当し、UIとDBの橋渡しをします。
+loop（繰り返し）：登録フロー（図1のNo.5〜6）にて、ユーザーが添付した画像の枚数分だけ、画像最適化処理（長辺1920px以内、JPEG80%等）を繰り返す構造にしています。  
 
-モデル(IndexedDB): 実際のデータの永続化や、現在の登録件数のカウントなど、データの直接的な操作を担当します。
-
-loop（繰り返し）: 登録フローにて、ユーザーが添付した画像の枚数分だけ（完成画像最大3枚＋手順画像最大50枚）、画像の最適化処理を繰り返す構造にしています。
-
-alt（条件分岐）: 登録フローでは「登録件数が100件に達しているかどうか」、削除フローでは「確認ダイアログでユーザーがどちらを選択したか」による処理の分岐を明確にしています。
+alt（条件分岐）：登録フローでは「登録件数が100件に達しているかどうか」による全体分岐と、その内部での「IndexedDBの容量超過により保存に失敗したか」のネストされた分岐を実装しています。  
+削除フローでは「確認ダイアログでユーザーがOK/キャンセルのどちらを選択したか」による処理の分岐を表現しています。  
 
 ### 状態遷移図
-![alt text](image-4.png)
-図の設計意図とポイント解説
-1. 状態の定義
-[*]（初期状態 / 終了状態）: 黒い丸で表現されるシステム外の状態です。データが存在しない状態から始まり、最終的に削除されてシステムから消滅するまでのライフサイクルを示します。
+![alt text](image-9.png)
+#### 図のポイント解説  
+初期状態 ([ ]) と終了状態 ([ ])：初期状態から新規作成を開始することで、データの入力状態（Drafting）へ遷移します。  
+削除確認ダイアログで「OK」を選択し、indexedDb からデータが完全に削除された時点が終了状態（ライフサイクルの終わり）となります。  
 
-未保存（入力中）: ユーザーが新規フォームに名前や画像をセットしている段階です。この時点ではまだブラウザのストレージ（IndexedDB）には保存されていません。
+Drafting（入力・編集状態）：AirplaneForm 上での状態です。基本情報の入力（EnteringData）を中心に、画像の添付（ImageUploader）や手順の追加（InstructionEditor）を行き来する内部状態を持たせています。  
 
-保存処理中: 登録や更新がリクエストされ、システムがバックグラウンドで「画像の自動圧縮（リサイズ等）」や「最大100件の制約チェック」を行っている過渡的な状態です。
+Validating（検証・保存処理状態）：ユーザーが保存を試みた際の一時的な状態です。要件にある「最大100件の上限チェック」「画像の圧縮・リサイズ」「DBへの保存」の順に処理が進みます。  
 
-登録済み（保持状態）: IndexedDBにデータが正常に保存され、安定している状態です。この状態のまま、一覧表示、詳細表示、ソート、検索などの操作が行われます。
+エラー（件数上限や容量超過）が発生した場合は、元の入力状態（Drafting）に差し戻され、エラーメッセージが表示される遷移（トリガー）を表現しています。  
 
-編集中 / 削除確認中: 既存データに対してユーザーが変更を加えようとしている、あるいは削除の最終確認を行っている状態です。
+Saved（保存済み状態）：indexedDb に永続化された状態です。AirplaneList での一覧表示や、DetailPage での詳細表示の間の遷移を行います。  
+SearchSort による検索・ソートは、一覧表示状態（DisplayedInList）における自己遷移として表現しています。
+ここから「編集」をトリガーとして Drafting に戻るか、「削除」をトリガーとして ConfirmingDelete へ進む分岐が発生します。
 
-2. トリガー（イベント）と遷移の制御
-保存失敗のループ: 要件にある「最大件数100件」「容量超過時はエラーメッセージ表示」という制約を表現するため、保存処理中 から 未保存 に戻る遷移（保存失敗のフォールバック）を明示しています。
-
-編集から保存への共通化: 新規作成時だけでなく、編集中に更新をリクエストした際も同様に 保存処理中 ステートを経由させることで、画像圧縮や容量チェックの処理が共通して走る設計意図を反映しています。
-
-キャンセルの担保: ユーザーの誤操作を防ぐため、入力中や編集中、削除確認の各状態から「キャンセル」をトリガーにして安全な状態へ戻る、もしくは破棄される遷移を設けています。
+## テストケース表
+| # | テスト対象 | テスト観点(正常/境界/異常) | テスト条件 | テスト手順(1行) | 期待値(1行) | 結果(○/ ) |
+|---|---|---|---|---|---|---|
+| 1 | 飛行機登録(新規) | 正常 | 全必須・任意項目に正当な値を入力して保存 | 新規作成画面で名前、飛距離、折り数、作成日、メモを入力し「保存」を押す | データが正常に保存され、一覧画面のリストに新しい飛行機が追加表示されること |〇|
+| 2 | 飛行機登録(編集) | 正常 | 既存データの一部を変更して保存 | 一覧から既存アイテムの「編集」を押し、名前の末尾に「改」を追記して「保存」を押す | データが上書き保存され、一覧および詳細画面で変更後の名前が表示されること |〇|
+| 3 | 飛行機リスト(削除) | 正常 | 既存の飛行機データを削除 | 一覧画面で任意のアイテムの「削除」を押し、表示された確認ダイアログで「OK」を押す | 対象のアイテムがリストから消滅し、再度ページを読み込んでも表示されないこと |〇|
+| 4 | 飛行機詳細表示 | 正常 | リストから特定の飛行機の詳細画面へ遷移 | 一覧画面に表示されている任意の飛行機項目（名前など）をクリックする | 詳細ページへ遷移し、その飛行機の飛距離や折り数、メモなどの全情報が表示されること |〇|
+| 5 | 検索機能 | 正常 | 存在する名前のキーワードで検索 | 検索ボックスに、一覧に存在する飛行機名の一部（例：「紙」）を入力する | 入力したキーワードを名前に含む飛行機のみがリストにフィルタリング表示されること |〇|
+| 6 | ソート機能 | 正常 | 飛距離を基準に昇順・降順を切り替え | ソートドロップダウンで「飛距離」を選択し、ソート順（昇順/降順）の切り替えボタンを押す | リスト内のアイテムが飛距離の数値に従って正しく並び替わること |〇|
+| 7 | 画像アップロード(完成図) | 正常 | 有効な画像ファイル(JPEG/PNG)を選択 | 完成図のファイル選択ボタンを押し、PC内の有効なJPEG画像を選択する | 選択した画像がプレビューエリアにサムネイル表示され、保存対象として認識されること |〇|
+| 8 | 手順(Instruction)追加 | 正常 | 折り方の手順ステップを新規追加 | 「手順の追加」ボタンを押し、表示されたテキストエリアに折り方の説明を入力する | 入力したテキストが新しいステップとしてUI上に追加され、保存可能な状態になること |〇|
+| 9 | 手順(Instruction)削除 | 正常 | 追加した手順ステップを削除 | 追加済み手順ステップの横にある「削除」ボタンを押す | 該当の手順ステップが画面から消去され、残りのステップの番号が自動で詰められること |〇|
+| 10 | 検索機能(該当なし) | 正常 | 存在しないキーワードで検索 | 検索ボックスに、登録データに絶対含まれない文字列を入力する | リストが空になり、「該当データがありません」等のメッセージが画面に表示されること |〇|
+| 11 | 飛行機登録(名前の境界) | 境界 | 名前を最小文字数（1文字）で入力 | 新規作成画面で名前に「あ」の1文字だけを入力し、他の必須項目を埋めて「保存」を押す | エラーにならず保存され、名前「あ」の飛行機が一覧に正常に表示されること |〇|
+| 12 | 飛行機登録(名前の境界) | 境界 | 名前をシステム想定の最大文字数で入力 | 名前に50文字の文字列を入力し、他の必須項目を埋めて「保存」を押す | 入力した長文が途切れたりレイアウトを崩したりせず、正常に保存・表示されること |〇|
+| 13 | 飛行機登録(飛距離の境界) | 境界 | 飛距離に0を入力 | 飛距離入力欄に「0」を入力し、他の必須項目を埋めて「保存」を押す | エラーにならず保存され、飛距離「0」として正常に表示されること |〇|
+| 14 | 飛行機登録(折り数の境界) | 境界 | 折り数に最低値の「1」を入力 | 折り数入力欄に「1」を入力し、他の必須項目を埋めて「保存」を押す | エラーにならず保存され、折り数「1」として正常に表示されること |〇|
+| 15 | 飛行機登録(任意項目の境界) | 境界 | 任意項目をすべて未入力のまま保存 | 名前・飛距離・折り数・作成日のみを入力し、メモ・画像・手順を空にして「保存」を押す | 正常に保存され、詳細画面では未入力項目が空欄または「登録なし」として扱われること |〇|
+| 16 | 飛行機リスト(0件表示) | 境界 | 登録データが全くない状態で一覧を表示 | 登録データを全て削除した状態（または初期状態）で一覧ページを開く | リスト領域が崩れず、「登録された飛行機はありません」等の空状態を示すUIが表示されること |〇|
+| 17 | 検索機能(空白の境界) | 境界 | 検索キーワードにスペースのみを入力 | 検索ボックスに全角スペースを1つだけ入力してフィルタリングを実行させる | クラッシュせず、スペースを含むデータのみ表示されるか全件表示のまま安全に維持されること |〇|
+| 18 | 手順追加(最大件数の境界) | 境界 | 手順を多数（例：20件）追加 | 「手順の追加」ボタンを20回連続で押し、全ての入力欄にテキストを入力して保存を押す | 動作が極端に重くならず20件分の入力枠が正常に生成・保存され、詳細画面で全て表示されること |〇|
+| 19 | 画像アップロード(サイズ境界) | 境界 | 許容最大ファイルサイズ上限ギリギリの画像を選択 | 完成図の画像選択で、システム上限（例：5MB）ちょうどのファイルサイズの画像を選択する | エラーにならず、プレビュー表示およびアップロード・保存処理が正常に完了すること |〇|
+| 20 | 作成日入力(締切/当日の境界) | 境界 | 作成日カレンダーで操作当日の日付を選択 | 新規作成画面の作成日入力欄で、カレンダーから「今日」の日付を選択して保存を押す | 正常に受け付けられ、一覧および詳細画面の作成日に当日の日付が正しく反映されること |〇|
+| 21 | 飛行機登録(必須チェック) | 異常 | 必須項目(名前)を未入力で保存を試みる | 新規作成画面で名前を空欄のままにし、飛距離や折り数だけ入力して「保存」を押す | 保存処理が実行されず、名前入力欄付近に「必須項目です」等のエラーメッセージが表示されること |〇|
+| 22 | 飛行機登録(不正な数値) | 異常 | 飛距離にマイナスの数値を入力 | 飛距離の入力欄にキーボードで「-10」と入力し、「保存」を押す | 保存処理が実行されず、「0以上の数値を入力してください」等のバリデーションエラーが表示されること |〇|
+| 23 | 画像アップロード(非対応形式) | 異常 | 画像以外の非対応ファイルを選択 | 画像選択ダイアログで、画像ではないファイル（例：.pdfや.txt）を選択する | アプリがクラッシュせず、「対応していないファイル形式です」等のエラー通知が安全に表示されること |〇|
+| 24 | DBアクセス(保存障害) | 異常 | ストレージ機能が制限された状態で保存を試みる | ブラウザの開発者ツールでIndexedDBの書き込み権限をブロックした状態で「保存」を押す | アプリが白画面でクラッシュせず、「保存に失敗しました」等の安全なエラーメッセージが表示されること |〇|
 </file>
 
 </files>
